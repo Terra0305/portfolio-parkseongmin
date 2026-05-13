@@ -1,42 +1,1026 @@
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
-import ErrorBoundary from "./components/ErrorBoundary";
-import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
+/*
+ * Design: Japanese Minimalism meets Swiss Typography
+ * Cream (#F7F5F0) base, Dark (#1A1A1A) text, Indigo (#3B5BDB) accent
+ * Sections: Hero → About → Skills → Projects → Awards → Contact
+ * Responsive: Mobile-first, grid collapses on small screens
+ */
 
+import { useEffect, useState } from 'react';
+import './index.css';
 
-function Router() {
-  return (
-    <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
-  );
+// ─── Data ─────────────────────────────────────────────────────────────────────
+
+const PROJECTS = [
+  {
+    id: '01',
+    title: '교내 알고리즘 대회 플랫폼 Codeforces',
+    period: '2025.12 ~ 진행중',
+    role: 'Infra',
+    description:
+      'IT융합대학 교내 공식 알고리즘 대회 플랫폼 채택 및 운영. 단일 Azure VM 환경에서 컨테이너 기반 인프라를 설계하고, Nginx 리버스 프록시를 통한 단일 진입점을 구축하여 실서비스로 운영 중.',
+    tags: ['Docker', 'Azure VM', 'Nginx', 'Infra'],
+    highlights: [
+      '컨테이너 기반 인프라 아키텍처 설계 및 배포 자동화',
+      'Nginx 리버스 프록시를 통한 단일 진입점(Entrypoint) 구축',
+      '조선대학교 SW중심대학 사업 공식 플랫폼으로 채택',
+    ],
+    github: 'https://github.com/parkseongmin',
+  },
+  {
+    id: '02',
+    title: '어린이 코딩 교육을 위한 알고리즘 시각화 플랫폼',
+    period: '2025.06 ~ 진행중',
+    role: 'Backend',
+    description:
+      '초급자를 위한 알고리즘 흐름을 시각화해주는 교육용 웹 플랫폼. Spring Security + JWT 기반 Stateless 인증 시스템 구축, Swagger 도입으로 API 명세 자동화.',
+    tags: ['Java', 'SpringBoot', 'JWT', 'Swagger', 'PostgreSQL'],
+    highlights: [
+      'Spring Security + JWT 기반 Stateless 인증 시스템 구축',
+      'Swagger 도입으로 실시간 API 명세서 자동화',
+      '교내 지원금 200만 원 유치 및 고도화 진행 중',
+    ],
+    github: 'https://github.com/parkseongmin',
+  },
+  {
+    id: '03',
+    title: '생성형 AI 기반 노인 맞춤형 기차 예매 서비스 "손에딱"',
+    period: '2025.06 ~ 2025.11',
+    role: 'Team Leader & Backend',
+    description:
+      '디지털 소외 계층을 위한 Google STT 및 Gemini LLM 기반 음성 예매 서비스. 팀장으로서 기획 및 300만 원 규모의 정부 과제를 수행하며 중간/최종 평가를 모두 통과.',
+    tags: ['Java', 'SpringBoot', 'Google STT', 'Gemini API', 'PostgreSQL'],
+    highlights: [
+      'Google Gemini API 연동 AI 응답 처리 파이프라인 구축',
+      'DataInitializer로 테스트 자동화 환경 조성',
+      '팀장으로서 300만 원 규모 정부 과제 수행, 사업화 가능성 검증',
+    ],
+    github: 'https://github.com/parkseongmin',
+  },
+  {
+    id: '04',
+    title: 'GIST-MIT 공동연구: 새로운 모달리티와 계산 효율적인 대조학습',
+    period: '2025.08 ~ 2025.10',
+    role: 'Research Assistant',
+    description:
+      '멀티모달 AI 학습용 데이터 전처리. Python 자동화 스크립트로 반복적인 자막 정제 과정을 개선하고, 정규표현식(Regex)을 활용한 데이터 정합성 확보.',
+    tags: ['Python', 'Regex', 'Data Processing', 'NLP'],
+    highlights: [
+      'Python 자동화 스크립트로 자막 정제 작업 속도 및 정확도 향상',
+      '비정형 VTT 파일 처리를 위한 정규표현식 및 오타 교정 사전 구축',
+      '수만 건의 데이터를 작업 중단 없이 안정적으로 변환 완료',
+    ],
+    github: 'https://github.com/parkseongmin',
+    note: '본 프로젝트의 세부 방법론 및 연구 성과는 보안서약(NDA) 체결로 인해 상세 기술이 제한됩니다.',
+  },
+];
+
+const SKILLS = [
+  { category: 'Languages', items: ['Java', 'Python'] },
+  { category: 'Frameworks', items: ['SpringBoot', 'Spring Security'] },
+  { category: 'Database', items: ['PostgreSQL'] },
+  { category: 'Infra / DevOps', items: ['Docker', 'Nginx', 'Azure VM', 'Git'] },
+  { category: 'Tools', items: ['Swagger', 'JWT', 'Gemini API', 'Google STT'] },
+];
+
+const AWARDS = [
+  {
+    title: '2025 프로그래밍 경시대회 ICPC',
+    result: '교내 1위 (대상)',
+    date: '2025.10.11',
+    org: '조선대학교 SW중심대학사업단',
+  },
+  {
+    title: '2025 조선대학교 SW아이디어톤 경진대회',
+    result: '3위 (우수상)',
+    date: '2025.11.22',
+    org: '조선대학교 SW중심대학사업단',
+  },
+  {
+    title: '2025 호남권 SW창업 아이디어 경진대회',
+    result: '6위 (장려상)',
+    date: '2025.09.30',
+    org: '호남권 소프트웨어중심대학협의회',
+  },
+];
+
+// ─── Hooks ────────────────────────────────────────────────────────────────────
+
+function useScrollReveal() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    const elements = document.querySelectorAll('.reveal, .divider-line');
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
+// ─── Navbar ───────────────────────────────────────────────────────────────────
 
-function App() {
+function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const sections = ['about', 'skills', 'projects', 'awards', 'contact'];
+  const labels = ['About', 'Skills', 'Projects', 'Awards', 'Contact'];
+
   return (
-    <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
+    <nav
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        background: 'rgba(247, 245, 240, 0.94)',
+        backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(204, 204, 204, 0.4)',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '1.25rem clamp(1.5rem, 5vw, 4rem)',
+        }}
       >
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
-      </ThemeProvider>
-    </ErrorBoundary>
+        <a
+          href="#hero"
+          style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: '0.85rem',
+            fontWeight: 500,
+            color: 'var(--charcoal)',
+            textDecoration: 'none',
+            letterSpacing: '0.05em',
+          }}
+        >
+          PSM.dev
+        </a>
+
+        {/* Desktop nav */}
+        <div className="desktop-only" style={{ display: 'flex', gap: '2.5rem' }}>
+          {sections.map((s, i) => (
+            <a key={s} href={`#${s}`} className="nav-link">
+              {labels[i]}
+            </a>
+          ))}
+        </div>
+
+        {/* Mobile hamburger */}
+        <button
+          className="mobile-menu-btn"
+          onClick={() => setMenuOpen(!menuOpen)}
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            display: 'none',
+            flexDirection: 'column',
+            gap: '5px',
+            padding: '4px',
+          }}
+          aria-label="메뉴"
+        >
+          {[0, 1, 2].map((i) => (
+            <span
+              key={i}
+              style={{
+                display: 'block',
+                width: '22px',
+                height: '1.5px',
+                background: 'var(--charcoal)',
+                transition: 'all 0.2s ease',
+              }}
+            />
+          ))}
+        </button>
+      </div>
+
+      {/* Mobile dropdown */}
+      {menuOpen && (
+        <div
+          style={{
+            padding: '1rem clamp(1.5rem, 5vw, 4rem) 1.5rem',
+            borderTop: '1px solid rgba(204, 204, 204, 0.4)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem',
+          }}
+        >
+          {sections.map((s, i) => (
+            <a
+              key={s}
+              href={`#${s}`}
+              className="nav-link"
+              onClick={() => setMenuOpen(false)}
+              style={{ fontSize: '0.9rem' }}
+            >
+              {labels[i]}
+            </a>
+          ))}
+        </div>
+      )}
+    </nav>
   );
 }
 
-export default App;
+// ─── Hero ─────────────────────────────────────────────────────────────────────
+
+function HeroSection() {
+  return (
+    <section
+      id="hero"
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        padding: 'clamp(6rem, 12vh, 10rem) clamp(1.5rem, 5vw, 4rem) 4rem',
+        backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663647760404/mXJ94MAuPRgRPyS2yxGEjU/hero-bg-juG8G2SGipz8xN37Hvy4di.webp)`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center right',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Corner brackets — PDF motif */}
+      <span
+        style={{
+          position: 'absolute',
+          top: '5rem',
+          left: '1.5rem',
+          width: '1.75rem',
+          height: '1.75rem',
+          borderTop: '2px solid var(--charcoal)',
+          borderLeft: '2px solid var(--charcoal)',
+        }}
+      />
+      <span
+        style={{
+          position: 'absolute',
+          bottom: '1.5rem',
+          right: '1.5rem',
+          width: '1.75rem',
+          height: '1.75rem',
+          borderBottom: '2px solid var(--charcoal)',
+          borderRight: '2px solid var(--charcoal)',
+        }}
+      />
+      {/* Top right label */}
+      <span
+        className="hero-animate hero-animate-1"
+        style={{
+          position: 'absolute',
+          top: '5.5rem',
+          right: 'clamp(1.5rem, 5vw, 4rem)',
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: '0.75rem',
+          color: 'var(--gray-text)',
+          letterSpacing: '0.1em',
+        }}
+      >
+        Backend Developer
+      </span>
+
+      <div style={{ maxWidth: '900px' }}>
+        <p
+          className="hero-animate hero-animate-1 font-mono"
+          style={{ fontSize: '0.8rem', color: 'var(--gray-text)', marginBottom: '1.25rem', letterSpacing: '0.15em' }}
+        >
+          Backend Developer
+        </p>
+
+        <h1
+          className="hero-animate hero-animate-2"
+          style={{
+            fontFamily: "'Noto Sans KR', sans-serif",
+            fontWeight: 900,
+            fontSize: 'clamp(2.8rem, 7vw, 6rem)',
+            lineHeight: 1.05,
+            letterSpacing: '-0.02em',
+            marginBottom: '0.15rem',
+          }}
+        >
+          개발자
+        </h1>
+        <h1
+          className="font-display hero-animate hero-animate-3"
+          style={{
+            fontSize: 'clamp(3.2rem, 9vw, 8.5rem)',
+            lineHeight: 1,
+            letterSpacing: '0.02em',
+            marginBottom: '2.5rem',
+          }}
+        >
+          PARK SEONGMIN
+        </h1>
+
+        <div className="hero-divider" />
+
+        <p
+          className="hero-animate hero-animate-4"
+          style={{
+            fontSize: 'clamp(0.9rem, 1.5vw, 1.05rem)',
+            color: 'var(--charcoal-mid)',
+            lineHeight: 1.9,
+            maxWidth: '460px',
+          }}
+        >
+          기본기가 튼튼한 개발자를 지향합니다.
+          <br />
+          꾸준한 알고리즘 학습으로 교내 경시대회 1위를 수상했고,
+          <br />
+          코드가 실제 서비스로 구현되는 전체 과정을 깊이 있게 배웠습니다.
+        </p>
+
+        <div
+          className="hero-animate hero-animate-5"
+          style={{ display: 'flex', gap: '1rem', marginTop: '2.5rem', flexWrap: 'wrap' }}
+        >
+          <a
+            href="#projects"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.7rem 1.6rem',
+              background: 'var(--charcoal)',
+              color: 'var(--cream)',
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '0.8rem',
+              letterSpacing: '0.08em',
+              textDecoration: 'none',
+              transition: 'background 0.25s ease',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = '#3B5BDB')}
+            onMouseLeave={(e) => (e.currentTarget.style.background = 'var(--charcoal)')}
+          >
+            View Projects →
+          </a>
+          <a
+            href="mailto:jpsm0305@naver.com"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.7rem 1.6rem',
+              border: '1px solid var(--charcoal)',
+              color: 'var(--charcoal)',
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '0.8rem',
+              letterSpacing: '0.08em',
+              textDecoration: 'none',
+              transition: 'all 0.25s ease',
+              background: 'transparent',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'var(--charcoal)';
+              e.currentTarget.style.color = 'var(--cream)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.color = 'var(--charcoal)';
+            }}
+          >
+            Contact Me
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── About ────────────────────────────────────────────────────────────────────
+
+function AboutSection() {
+  return (
+    <section id="about" style={{ padding: 'clamp(5rem, 10vh, 8rem) clamp(1.5rem, 5vw, 4rem)' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <SectionHeader num="01" label="ABOUT ME" />
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: 'clamp(2rem, 5vw, 6rem)',
+            alignItems: 'start',
+          }}
+        >
+          {/* Left */}
+          <div>
+            <h2
+              className="reveal"
+              style={{
+                fontFamily: "'Noto Sans KR', sans-serif",
+                fontWeight: 900,
+                fontSize: 'clamp(1.8rem, 3.5vw, 3rem)',
+                lineHeight: 1.25,
+                marginBottom: '2rem',
+              }}
+            >
+              기본기가 튼튼한
+              <br />
+              <span style={{ fontWeight: 300 }}>개발자를 지향하는</span>
+              <br />
+              지원자 박성민입니다.
+            </h2>
+
+            <div
+              className="reveal reveal-delay-1"
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: '0.8rem',
+                color: 'var(--gray-text)',
+                lineHeight: 2.2,
+                borderLeft: '2px solid var(--gray-line)',
+                paddingLeft: '1.25rem',
+              }}
+            >
+              <p>Mobile: 010-9397-3908</p>
+              <p>E-mail: jpsm0305@naver.com</p>
+              <p>Birth: 2002.03.05</p>
+            </div>
+          </div>
+
+          {/* Right */}
+          <div>
+            <InfoList
+              title="Education & Military"
+              items={[
+                { period: '2021.03 ~', desc: '조선대학교 컴퓨터 공학과 재학 중' },
+                { period: '2022.04 ~ 2023.10', desc: '대한민국 육군 병장 만기 전역' },
+                { period: '2018.03 ~ 2021.02', desc: '광덕고등학교 졸업' },
+              ]}
+            />
+            <div style={{ marginTop: '2.5rem' }}>
+              <InfoList
+                title="Activities"
+                items={[
+                  { period: '2025.07 ~ 2025.11', desc: '호남 ICT 이노베이션 개발자 소그룹 팀빌딩 6기 팀장' },
+                  { period: '2025.08 ~ 2025.10', desc: 'GIST-MIT 공동 연구, 외부 참여 연구원 (Research Assistant)' },
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function InfoList({ title, items }: { title: string; items: { period: string; desc: string }[] }) {
+  return (
+    <div className="reveal">
+      <h3
+        style={{
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: '0.7rem',
+          letterSpacing: '0.12em',
+          color: 'var(--gray-text)',
+          marginBottom: '1rem',
+          textTransform: 'uppercase',
+        }}
+      >
+        {title}
+      </h3>
+      {items.map((item, i) => (
+        <div
+          key={i}
+          className={`award-card reveal reveal-delay-${i + 1}`}
+          style={{ display: 'flex', gap: '1.25rem', alignItems: 'flex-start' }}
+        >
+          <span
+            style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '0.7rem',
+              color: 'var(--gray-text)',
+              whiteSpace: 'nowrap',
+              minWidth: '110px',
+              paddingTop: '0.15rem',
+            }}
+          >
+            {item.period}
+          </span>
+          <span style={{ fontSize: '0.88rem', lineHeight: 1.6 }}>{item.desc}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ─── Skills ───────────────────────────────────────────────────────────────────
+
+function SkillsSection() {
+  return (
+    <section
+      id="skills"
+      style={{
+        padding: 'clamp(5rem, 10vh, 8rem) clamp(1.5rem, 5vw, 4rem)',
+        background: 'var(--cream-dark)',
+        backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663647760404/mXJ94MAuPRgRPyS2yxGEjU/skills-bg-Szx7En5suT9BoJEBm8v9ki.webp)`,
+        backgroundSize: 'cover',
+      }}
+    >
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <SectionHeader num="02" label="CORE COMPETENCIES" />
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: 'clamp(2rem, 5vw, 4rem)',
+            alignItems: 'start',
+          }}
+        >
+          <div>
+            <h2
+              className="reveal"
+              style={{
+                fontFamily: "'Noto Sans KR', sans-serif",
+                fontWeight: 900,
+                fontSize: 'clamp(1.8rem, 3.5vw, 3rem)',
+                lineHeight: 1.25,
+                marginBottom: '1.5rem',
+              }}
+            >
+              박성민의
+              <br />
+              <strong>핵심역량</strong>
+            </h2>
+            <p
+              className="reveal reveal-delay-1"
+              style={{ fontSize: '0.92rem', color: 'var(--charcoal-mid)', lineHeight: 1.9, maxWidth: '380px' }}
+            >
+              꾸준한 알고리즘 학습으로 교내 경시대회 1위를 수상했고, 정부 지원사업의 팀장으로서 프로젝트를 주도하며{' '}
+              <strong>코드가 실제 서비스로 구현되는 전체 과정</strong>을 깊이 있게 배웠습니다.
+            </p>
+          </div>
+
+          <div>
+            {SKILLS.map((group, gi) => (
+              <div key={gi} className={`reveal reveal-delay-${gi + 1}`} style={{ marginBottom: '1.5rem' }}>
+                <p
+                  style={{
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: '0.68rem',
+                    color: 'var(--gray-text)',
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    marginBottom: '0.5rem',
+                  }}
+                >
+                  {group.category}
+                </p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                  {group.items.map((skill) => (
+                    <span key={skill} className="skill-tag">
+                      #{skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Projects ─────────────────────────────────────────────────────────────────
+
+function ProjectsSection() {
+  return (
+    <section id="projects" style={{ padding: 'clamp(5rem, 10vh, 8rem) clamp(1.5rem, 5vw, 4rem)' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <SectionHeader num="03" label="PROJECT EXPERIENCE" />
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          {PROJECTS.map((project, i) => (
+            <ProjectCard key={project.id} project={project} delay={(i % 3) + 1} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProjectCard({ project, delay }: { project: (typeof PROJECTS)[0]; delay: number }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div
+      className={`project-card reveal reveal-delay-${delay}`}
+      style={{ padding: 'clamp(1.5rem, 3vw, 2.5rem)' }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {/* Header row */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+          marginBottom: '1rem',
+          flexWrap: 'wrap',
+          gap: '0.75rem',
+        }}
+      >
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.4rem', flexWrap: 'wrap' }}>
+            <span className="font-mono card-period" style={{ fontSize: '0.72rem', color: hovered ? 'rgba(247,245,240,0.5)' : 'var(--gray-text)' }}>
+              {project.id}
+            </span>
+            <span className="font-mono card-period" style={{ fontSize: '0.72rem', color: hovered ? 'rgba(247,245,240,0.5)' : 'var(--gray-text)' }}>
+              {project.period}
+            </span>
+            <span
+              className="font-mono card-period"
+              style={{
+                fontSize: '0.68rem',
+                color: hovered ? 'rgba(247,245,240,0.6)' : 'var(--gray-text)',
+                border: `1px solid ${hovered ? 'rgba(247,245,240,0.25)' : 'var(--gray-line)'}`,
+                padding: '0.12rem 0.5rem',
+              }}
+            >
+              {project.role}
+            </span>
+          </div>
+          <h3
+            className="card-title"
+            style={{
+              fontFamily: "'Noto Sans KR', sans-serif",
+              fontWeight: 700,
+              fontSize: 'clamp(1rem, 2vw, 1.3rem)',
+              lineHeight: 1.35,
+              color: hovered ? 'var(--cream)' : 'var(--charcoal)',
+            }}
+          >
+            {project.title}
+          </h3>
+        </div>
+
+        {/* GitHub button */}
+        <a
+          href={project.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="github-btn"
+          onClick={(e) => e.stopPropagation()}
+          style={{
+            color: hovered ? '#7BA7FF' : 'var(--charcoal)',
+            borderColor: hovered ? 'rgba(247,245,240,0.3)' : 'var(--charcoal)',
+            flexShrink: 0,
+          }}
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+          </svg>
+          GitHub
+        </a>
+      </div>
+
+      {/* Description */}
+      <p
+        className="card-desc"
+        style={{
+          fontSize: '0.88rem',
+          color: hovered ? 'rgba(247,245,240,0.75)' : 'var(--charcoal-mid)',
+          lineHeight: 1.8,
+          marginBottom: '1rem',
+        }}
+      >
+        {project.description}
+      </p>
+
+      {/* Highlights */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', marginBottom: '1rem' }}>
+        {project.highlights.map((h, hi) => (
+          <div key={hi} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
+            <span
+              className="font-mono"
+              style={{
+                fontSize: '0.68rem',
+                color: hovered ? 'rgba(247,245,240,0.4)' : 'var(--gray-text)',
+                marginTop: '0.2rem',
+                flexShrink: 0,
+              }}
+            >
+              {String(hi + 1).padStart(2, '0')}
+            </span>
+            <span
+              className="card-body"
+              style={{ fontSize: '0.84rem', lineHeight: 1.7, color: hovered ? 'rgba(247,245,240,0.85)' : 'var(--charcoal)' }}
+            >
+              {h}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* NDA note */}
+      {project.note && (
+        <p
+          className="font-mono"
+          style={{
+            fontSize: '0.7rem',
+            color: hovered ? 'rgba(247,245,240,0.4)' : 'var(--gray-text)',
+            fontStyle: 'italic',
+            marginBottom: '0.75rem',
+          }}
+        >
+          * {project.note}
+        </p>
+      )}
+
+      {/* Tags */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+        {project.tags.map((tag) => (
+          <span
+            key={tag}
+            className="card-tag"
+            style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '0.7rem',
+              padding: '0.2rem 0.55rem',
+              border: `1px solid ${hovered ? 'rgba(247,245,240,0.2)' : 'var(--gray-line)'}`,
+              color: hovered ? 'rgba(247,245,240,0.6)' : 'var(--gray-text)',
+              background: 'transparent',
+            }}
+          >
+            #{tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Awards ───────────────────────────────────────────────────────────────────
+
+function AwardsSection() {
+  return (
+    <section
+      id="awards"
+      style={{
+        padding: 'clamp(5rem, 10vh, 8rem) clamp(1.5rem, 5vw, 4rem)',
+        background: 'var(--charcoal)',
+        color: 'var(--cream)',
+      }}
+    >
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '3rem' }}>
+          <span className="section-number reveal" style={{ color: 'rgba(247,245,240,0.35)' }}>
+            04
+          </span>
+          <div className="divider-line reveal" style={{ flex: 1, background: 'rgba(247,245,240,0.15)' }} />
+          <span
+            className="reveal"
+            style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '0.72rem',
+              color: 'rgba(247,245,240,0.35)',
+              letterSpacing: '0.1em',
+            }}
+          >
+            AWARDS
+          </span>
+        </div>
+
+        <h2
+          className="reveal"
+          style={{
+            fontFamily: "'Noto Sans KR', sans-serif",
+            fontWeight: 900,
+            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+            marginBottom: '2.5rem',
+          }}
+        >
+          수상 내역
+        </h2>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem' }}>
+          {AWARDS.map((award, i) => (
+            <div
+              key={i}
+              className={`reveal reveal-delay-${i + 1}`}
+              style={{
+                padding: '1.75rem',
+                border: '1px solid rgba(247,245,240,0.12)',
+                transition: 'border-color 0.2s ease',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'rgba(247,245,240,0.45)')}
+              onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'rgba(247,245,240,0.12)')}
+            >
+              <p
+                style={{
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: '0.7rem',
+                  color: 'rgba(247,245,240,0.35)',
+                  marginBottom: '0.6rem',
+                  letterSpacing: '0.08em',
+                }}
+              >
+                {award.date}
+              </p>
+              <h3
+                style={{
+                  fontFamily: "'Noto Sans KR', sans-serif",
+                  fontWeight: 700,
+                  fontSize: '0.95rem',
+                  marginBottom: '0.4rem',
+                  lineHeight: 1.45,
+                }}
+              >
+                {award.title}
+              </h3>
+              <p
+                style={{
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: '0.82rem',
+                  color: '#7BA7FF',
+                  marginBottom: '0.35rem',
+                }}
+              >
+                {award.result}
+              </p>
+              <p style={{ fontSize: '0.78rem', color: 'rgba(247,245,240,0.45)' }}>{award.org}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Contact ──────────────────────────────────────────────────────────────────
+
+function ContactSection() {
+  return (
+    <section id="contact" style={{ padding: 'clamp(5rem, 10vh, 8rem) clamp(1.5rem, 5vw, 4rem)' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <SectionHeader num="05" label="CONTACT" />
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: 'clamp(2rem, 5vw, 6rem)',
+            alignItems: 'center',
+          }}
+        >
+          <div>
+            <h2
+              className="reveal"
+              style={{
+                fontFamily: "'Noto Sans KR', sans-serif",
+                fontWeight: 900,
+                fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+                lineHeight: 1.2,
+                marginBottom: '1.25rem',
+              }}
+            >
+              함께 일하고
+              <br />
+              싶으신가요?
+            </h2>
+            <p
+              className="reveal reveal-delay-1"
+              style={{ fontSize: '0.92rem', color: 'var(--charcoal-mid)', lineHeight: 1.9 }}
+            >
+              새로운 기회와 협업에 항상 열려 있습니다.
+              <br />
+              아래 연락처로 편하게 연락 주세요.
+            </p>
+          </div>
+
+          <div className="reveal reveal-delay-2" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            {[
+              {
+                href: 'mailto:jpsm0305@naver.com',
+                label: 'jpsm0305@naver.com',
+                icon: (
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                  </svg>
+                ),
+              },
+              {
+                href: 'tel:010-9397-3908',
+                label: '010-9397-3908',
+                icon: (
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.09a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17.5l.19-.58z" />
+                  </svg>
+                ),
+              },
+              {
+                href: 'https://github.com/parkseongmin',
+                label: 'github.com/parkseongmin',
+                icon: (
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                  </svg>
+                ),
+                target: '_blank',
+              },
+            ].map((item, i) => (
+              <a
+                key={i}
+                href={item.href}
+                target={(item as any).target}
+                rel={(item as any).target ? 'noopener noreferrer' : undefined}
+                className="contact-link"
+                style={{ fontSize: '0.95rem' }}
+              >
+                {item.icon}
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Footer ───────────────────────────────────────────────────────────────────
+
+function Footer() {
+  return (
+    <footer
+      style={{
+        padding: '1.75rem clamp(1.5rem, 5vw, 4rem)',
+        borderTop: '1px solid var(--gray-line)',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: '0.75rem',
+      }}
+    >
+      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', color: 'var(--gray-text)' }}>
+        © 2025 Park Seongmin. Backend Developer.
+      </span>
+      <span
+        style={{
+          width: '1.2rem',
+          height: '1.2rem',
+          borderBottom: '1.5px solid var(--gray-line)',
+          borderRight: '1.5px solid var(--gray-line)',
+          display: 'block',
+        }}
+      />
+    </footer>
+  );
+}
+
+// ─── Shared: Section Header ────────────────────────────────────────────────────
+
+function SectionHeader({ num, label }: { num: string; label: string }) {
+  return (
+    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: 'clamp(2.5rem, 5vh, 4rem)' }}>
+      <span className="section-number reveal">{num}</span>
+      <div className="divider-line reveal" style={{ flex: 1 }} />
+      <span
+        className="reveal"
+        style={{
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: '0.72rem',
+          color: 'var(--gray-text)',
+          letterSpacing: '0.1em',
+        }}
+      >
+        {label}
+      </span>
+    </div>
+  );
+}
+
+// ─── Main App ─────────────────────────────────────────────────────────────────
+
+export default function App() {
+  useScrollReveal();
+
+  return (
+    <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
+      <Navbar />
+      <HeroSection />
+      <AboutSection />
+      <SkillsSection />
+      <ProjectsSection />
+      <AwardsSection />
+      <ContactSection />
+      <Footer />
+    </div>
+  );
+}
