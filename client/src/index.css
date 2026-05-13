@@ -32,6 +32,17 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  scroll-snap-type: y mandatory;
+}
+
+section {
+  scroll-snap-align: start;
+  /* Uncomment the below line if you want strict snapping every time */
+  /* scroll-snap-stop: always; */
+}
+
+footer {
+  scroll-snap-align: end;
 }
 
 body {
