@@ -42,7 +42,7 @@ const PROJECTS = [
   {
     id: '02',
     title: '어린이 코딩 교육을 위한 알고리즘 시각화 플랫폼',
-    period: '2025.06 ~ 진행중',
+    period: '2025.06 ~ 2026.02',
     role: 'Backend',
     description: '초급자를 위한 알고리즘 흐름을 시각화해주는 교육용 웹 플랫폼. 다중 접속 환경의 서버 부하를 고려해 Spring Security + JWT 기반 Stateless 인증 구조를 설계했습니다.',
     tags: ['Java', 'SpringBoot', 'JWT', 'Swagger', 'PostgreSQL'],
