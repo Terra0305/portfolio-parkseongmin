@@ -27,52 +27,57 @@ const PROJECTS = [
     title: '교내 알고리즘 대회 플랫폼 Codeforces',
     period: '2025.12 ~ 진행중',
     role: 'Infra',
-    description: 'IT융합대학 교내 공식 알고리즘 대회 플랫폼 채택 및 운영. 단일 Azure VM 환경에서 컨테이너 기반 인프라를 설계하고, Nginx 리버스 프록시를 통한 단일 진입점을 구축하여 실서비스로 운영 중.',
+    description: 'IT융합대학 교내 공식 알고리즘 대회 플랫폼 채택 및 운영. 단일 Azure VM 환경에서 프론트·백엔드 실행 환경을 분리하고, Nginx 리버스 프록시를 통해 파일 서빙과 API 라우팅을 단일 진입점으로 통합했습니다.',
     tags: ['Docker', 'Azure VM', 'Nginx', 'Infra'],
     highlights: [
       '컨테이너 기반 인프라 아키텍처 설계 및 배포 자동화',
-      'Nginx 리버스 프록시를 통한 단일 진입점(Entrypoint) 구축',
+      'Nginx 리버스 프록시로 CORS 이슈를 구조적으로 차단하고 응답 흐름 개선',
       '조선대학교 SW중심대학 사업 공식 플랫폼으로 채택',
     ],
-    github: 'https://github.com/Terra0305/Korean-codeforces',
+    github: 'https://github.com/Terra0305/Korean-codeforces.git',
+    notion: 'https://hallowed-second-cae.notion.site/CSforces-33cca50bf30d80f78ee4cdb9070df8a6?source=copy_link',
     images: [IMAGES.proj1_combined],
+    imageCaption: '실제 교내 코드포스 경진대회 운영 현장',
   },
   {
     id: '02',
     title: '어린이 코딩 교육을 위한 알고리즘 시각화 플랫폼',
     period: '2025.06 ~ 진행중',
     role: 'Backend',
-    description: '초급자를 위한 알고리즘 흐름을 시각화해주는 교육용 웹 플랫폼. Spring Security + JWT 기반 Stateless 인증 시스템 구축, Swagger 도입으로 API 명세 자동화.',
+    description: '초급자를 위한 알고리즘 흐름을 시각화해주는 교육용 웹 플랫폼. 다중 접속 환경의 서버 부하를 고려해 Spring Security + JWT 기반 Stateless 인증 구조를 설계했습니다.',
     tags: ['Java', 'SpringBoot', 'JWT', 'Swagger', 'PostgreSQL'],
     highlights: [
-      'Spring Security + JWT 기반 Stateless 인증 시스템 구축',
-      'Swagger 도입으로 실시간 API 명세서 자동화',
+      '세션 관리가 필요 없는 확장 가능한 인증 아키텍처 구현',
+      'Swagger 도입으로 실시간 API 명세서를 자동화해 프론트엔드 협업 비용 절감',
       '교내 지원금 200만 원 유치 및 고도화 진행 중',
     ],
     github: 'https://github.com/Terra0305/Capstone',
     images: [IMAGES.proj2_screenshot],
+    imageCaption: '알고리즘 흐름을 단계별로 확인하는 코딩 시각화 화면',
   },
   {
     id: '03',
     title: '생성형 AI 기반 노인 맞춤형 기차 예매 서비스 "손에딱"',
     period: '2025.06 ~ 2025.11',
     role: 'Team Leader & Backend',
-    description: '디지털 소외 계층을 위한 Google STT 및 Gemini LLM 기반 음성 예매 서비스. 팀장으로서 기획 및 300만 원 규모의 정부 과제를 수행하며 중간/최종 평가를 모두 통과.',
+    description: '디지털 소외 계층을 위한 Google STT 및 Gemini LLM 기반 음성 예매 서비스. 비정형 음성 발화에서 예매 정보를 추출하고, 시스템이 처리 가능한 JSON 포맷으로 정규화하는 흐름을 설계했습니다.',
     tags: ['Java', 'SpringBoot', 'Google STT', 'Gemini API', 'PostgreSQL'],
     highlights: [
       'Google Gemini API 연동 AI 응답 처리 파이프라인 구축',
-      'DataInitializer로 테스트 자동화 환경 조성',
+      'DataInitializer로 실행 시마다 일관된 기차표 더미 데이터를 생성하는 테스트베드 확보',
       '팀장으로서 300만 원 규모 정부 과제 수행, 사업화 가능성 검증',
     ],
     github: 'https://github.com/Terra0305/Teambuilding',
+    notion: 'https://www.notion.so/6-268ca50bf30d8046a487e201dc991d6b?source=copy_link',
     images: [IMAGES.proj3_photo],
+    imageCaption: '개발자 소그룹 팀빌딩 6기 프로젝트 발표 및 검증 자료',
   },
   {
     id: '04',
     title: 'GIST-MIT 공동연구: 새로운 모달리티와 계산 효율적인 대조학습',
     period: '2025.08 ~ 2025.10',
     role: 'Research Assistant',
-    description: '멀티모달 AI 학습용 데이터 전처리. Python 자동화 스크립트로 반복적인 자막 정제 과정을 개선하고, 정규표현식(Regex)을 활용한 데이터 정합성 확보.',
+    description: '멀티모달 AI 학습용 데이터 전처리. 수작업으로 진행되던 반복 자막 정제 과정을 Python 자동화 스크립트로 개선하고, 예외 처리와 로깅을 통해 대량 파일을 안정적으로 변환했습니다.',
     tags: ['Python', 'Regex', 'Data Processing', 'NLP'],
     highlights: [
       'Python 자동화 스크립트로 자막 정제 작업 속도 및 정확도 향상',
@@ -80,7 +85,9 @@ const PROJECTS = [
       '수만 건의 데이터를 작업 중단 없이 안정적으로 변환 완료',
     ],
     github: 'https://github.com/Terra0305/vtt-data-preprocessor',
+    notion: 'https://hallowed-second-cae.notion.site/GIST-MIT-273ca50bf30d8046b01ef222d90e9152',
     images: [IMAGES.proj4_doc],
+    imageCaption: 'GIST-MIT 공동연구 외부 참여 연구원 확인 자료',
     note: '본 프로젝트의 세부 방법론 및 연구 성과는 보안서약(NDA) 체결로 인해 상세 기술이 제한됩니다.',
   },
 ];
@@ -109,6 +116,74 @@ function useScrollReveal() {
     );
     document.querySelectorAll('.reveal, .divider-line').forEach(el => observer.observe(el));
     return () => observer.disconnect();
+  }, []);
+}
+
+function useChapterWheelScroll() {
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 769px)');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let wheelSum = 0;
+    let lastJumpAt = 0;
+    const threshold = 760;
+    const cooldown = 850;
+    const topOffset = 78;
+
+    const getChapters = () => Array.from(document.querySelectorAll<HTMLElement>('[data-chapter]'));
+
+    const getCurrentIndex = (chapters: HTMLElement[]) => {
+      const anchor = window.scrollY + window.innerHeight * 0.38;
+      return chapters.reduce((closest, chapter, index) => {
+        const currentDistance = Math.abs(chapter.offsetTop - anchor);
+        const closestDistance = Math.abs(chapters[closest].offsetTop - anchor);
+        return currentDistance < closestDistance ? index : closest;
+      }, 0);
+    };
+
+    const onWheel = (event: WheelEvent) => {
+      if (!media.matches || reducedMotion.matches || event.ctrlKey) return;
+
+      const chapters = getChapters();
+      if (chapters.length < 2) return;
+
+      const now = Date.now();
+      const currentIndex = getCurrentIndex(chapters);
+      const current = chapters[currentIndex];
+      const rect = current.getBoundingClientRect();
+      const goingDown = event.deltaY > 0;
+      const canScrollInsideCurrent =
+        goingDown
+          ? rect.bottom > window.innerHeight + 48
+          : rect.top < topOffset - 48;
+
+      if (canScrollInsideCurrent) {
+        wheelSum = 0;
+        return;
+      }
+
+      event.preventDefault();
+
+      if (now - lastJumpAt < cooldown) return;
+
+      wheelSum += event.deltaY;
+      if (Math.abs(wheelSum) < threshold) return;
+
+      const direction = wheelSum > 0 ? 1 : -1;
+      const nextIndex = Math.max(0, Math.min(chapters.length - 1, currentIndex + direction));
+
+      wheelSum = 0;
+      if (nextIndex === currentIndex) return;
+
+      lastJumpAt = now;
+      const targetTop = Math.max(0, chapters[nextIndex].offsetTop - topOffset);
+      window.scrollTo({
+        top: targetTop,
+        behavior: reducedMotion.matches ? 'auto' : 'smooth',
+      });
+    };
+
+    window.addEventListener('wheel', onWheel, { passive: false });
+    return () => window.removeEventListener('wheel', onWheel);
   }, []);
 }
 
@@ -141,7 +216,7 @@ function Navbar() {
 
 function HeroSection() {
   return (
-    <section id="hero" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 'clamp(6rem,12vh,10rem) clamp(1.5rem,5vw,4rem) 4rem', backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663647760404/mXJ94MAuPRgRPyS2yxGEjU/hero-bg-juG8G2SGipz8xN37Hvy4di.webp)`, backgroundSize: 'cover', backgroundPosition: 'center right', position: 'relative', overflow: 'hidden' }}>
+    <section id="hero" data-chapter style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 'clamp(6rem,12vh,10rem) clamp(1.5rem,5vw,4rem) 4rem', backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663647760404/mXJ94MAuPRgRPyS2yxGEjU/hero-bg-juG8G2SGipz8xN37Hvy4di.webp)`, backgroundSize: 'cover', backgroundPosition: 'center right', position: 'relative', overflow: 'hidden' }}>
       <span style={{ position: 'absolute', top: '5rem', left: '1.5rem', width: '1.75rem', height: '1.75rem', borderTop: '2px solid var(--charcoal)', borderLeft: '2px solid var(--charcoal)' }} />
       <span style={{ position: 'absolute', bottom: '1.5rem', right: '1.5rem', width: '1.75rem', height: '1.75rem', borderBottom: '2px solid var(--charcoal)', borderRight: '2px solid var(--charcoal)' }} />
       <div style={{ maxWidth: '900px' }}>
@@ -165,7 +240,7 @@ function HeroSection() {
 
 function AboutSection() {
   return (
-    <section id="about" style={{ padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,4rem)' }}>
+    <section id="about" data-chapter style={{ padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,4rem)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <SectionHeader num="01" label="ABOUT ME" />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 'clamp(2rem,5vw,6rem)', alignItems: 'start' }}>
@@ -181,7 +256,6 @@ function AboutSection() {
             <div className="reveal reveal-delay-2" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.8rem', color: 'var(--gray-text)', lineHeight: 2.2, borderLeft: '2px solid var(--gray-line)', paddingLeft: '1.25rem' }}>
               <p>Mobile: 010-9397-3908</p>
               <p>E-mail: jpsm0305@naver.com</p>
-              <p>Birth: 2002.03.05</p>
             </div>
           </div>
           {/* Right: 학력 + 활동 */}
@@ -222,13 +296,13 @@ function InfoList({ title, items }: { title: string; items: { period: string; de
 
 function SkillsSection() {
   return (
-    <section id="skills" style={{ padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,4rem)', background: 'var(--cream-dark)', backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663647760404/mXJ94MAuPRgRPyS2yxGEjU/skills-bg-Szx7En5suT9BoJEBm8v9ki.webp)`, backgroundSize: 'cover' }}>
+    <section id="skills" data-chapter style={{ padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,4rem)', background: 'var(--cream-dark)', backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663647760404/mXJ94MAuPRgRPyS2yxGEjU/skills-bg-Szx7En5suT9BoJEBm8v9ki.webp)`, backgroundSize: 'cover' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <SectionHeader num="02" label="CORE COMPETENCIES" />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 'clamp(2rem,5vw,4rem)', alignItems: 'start' }}>
           <div>
             <h2 className="reveal" style={{ fontFamily: "'Noto Sans KR',sans-serif", fontWeight: 900, fontSize: 'clamp(1.8rem,3.5vw,3rem)', lineHeight: 1.25, marginBottom: '1.5rem' }}>박성민의<br /><strong>핵심역량</strong></h2>
-            <p className="reveal reveal-delay-1" style={{ fontSize: '0.92rem', color: 'var(--charcoal-mid)', lineHeight: 1.9, maxWidth: '380px' }}>꾸준한 알고리즘 학습으로 교내 경시대회 1위를 수상했고, 정부 지원사업의 팀장으로서 프로젝트를 주도하며 <strong>코드가 실제 서비스로 구현되는 전체 과정</strong>을 깊이 있게 배웠습니다.</p>
+            <p className="reveal reveal-delay-1" style={{ fontSize: '0.92rem', color: 'var(--charcoal-mid)', lineHeight: 1.9, maxWidth: '380px' }}>Java와 SpringBoot를 중심으로 인증, API, 데이터 처리, 배포 흐름을 경험했습니다. 알고리즘 학습으로 쌓은 문제 해결력을 바탕으로 <strong>코드가 실제 서비스로 운영되는 과정</strong>까지 넓혀가고 있습니다.</p>
           </div>
           <div>
             {SKILLS.map((group, gi) => (
@@ -264,7 +338,7 @@ function ProjectsSection() {
 function ProjectCard({ project, delay }: { project: typeof PROJECTS[0]; delay: number }) {
   const [hovered, setHovered] = useState(false);
   return (
-    <div className={`project-card reveal reveal-delay-${delay}`} style={{ padding: 'clamp(1.5rem,3vw,2.5rem)' }} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <div data-chapter className={`project-card reveal reveal-delay-${delay}`} style={{ padding: 'clamp(1.5rem,3vw,2.5rem)' }} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.75rem' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.4rem', flexWrap: 'wrap' }}>
@@ -274,10 +348,17 @@ function ProjectCard({ project, delay }: { project: typeof PROJECTS[0]; delay: n
           </div>
           <h3 className="card-title" style={{ fontFamily: "'Noto Sans KR',sans-serif", fontWeight: 700, fontSize: 'clamp(1rem,2vw,1.3rem)', lineHeight: 1.35, color: hovered ? 'var(--cream)' : 'var(--charcoal)' }}>{project.title}</h3>
         </div>
-        <a href={project.github} target="_blank" rel="noopener noreferrer" className="github-btn" onClick={e => e.stopPropagation()} style={{ color: hovered ? '#7BA7FF' : 'var(--charcoal)', borderColor: hovered ? 'rgba(247,245,240,0.3)' : 'var(--charcoal)', flexShrink: 0 }}>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" /></svg>
-          GitHub
-        </a>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+          {'notion' in project && project.notion && (
+            <a href={project.notion} target="_blank" rel="noopener noreferrer" className="github-btn" onClick={e => e.stopPropagation()} style={{ color: hovered ? '#7BA7FF' : 'var(--charcoal)', borderColor: hovered ? 'rgba(247,245,240,0.3)' : 'var(--charcoal)', flexShrink: 0 }}>
+              Notion
+            </a>
+          )}
+          <a href={project.github} target="_blank" rel="noopener noreferrer" className="github-btn" onClick={e => e.stopPropagation()} style={{ color: hovered ? '#7BA7FF' : 'var(--charcoal)', borderColor: hovered ? 'rgba(247,245,240,0.3)' : 'var(--charcoal)', flexShrink: 0 }}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" /></svg>
+            GitHub
+          </a>
+        </div>
       </div>
       <p className="card-desc" style={{ fontSize: '0.88rem', color: hovered ? 'rgba(247,245,240,0.75)' : 'var(--charcoal-mid)', lineHeight: 1.8, marginBottom: '1rem' }}>{project.description}</p>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', marginBottom: '1rem' }}>
@@ -296,9 +377,12 @@ function ProjectCard({ project, delay }: { project: typeof PROJECTS[0]; delay: n
         <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
           {project.images.map((src, idx) => (
             <div key={idx} style={{ flex: '1 1 200px', maxWidth: '480px', overflow: 'hidden', border: `1px solid ${hovered ? 'rgba(247,245,240,0.2)' : 'var(--gray-line)'}` }}>
-              <img src={src} alt={`${project.title} 증빙`} style={{ width: '100%', maxHeight: '260px', objectFit: 'contain', objectPosition: 'center', display: 'block', background: hovered ? 'rgba(255,255,255,0.05)' : '#fafafa' }} />
+              <img src={src} alt={`${project.title} 증빙`} loading="lazy" style={{ width: '100%', maxHeight: '260px', objectFit: 'contain', objectPosition: 'center', display: 'block', background: hovered ? 'rgba(255,255,255,0.05)' : '#fafafa' }} />
             </div>
           ))}
+          {'imageCaption' in project && project.imageCaption && (
+            <p className="font-mono" style={{ width: '100%', fontSize: '0.68rem', color: hovered ? 'rgba(247,245,240,0.45)' : 'var(--gray-text)' }}>{project.imageCaption}</p>
+          )}
         </div>
       )}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
@@ -314,24 +398,20 @@ function ProjectCard({ project, delay }: { project: typeof PROJECTS[0]; delay: n
 
 function AwardsSection() {
   return (
-    <section id="awards" style={{ padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,4rem)', background: 'var(--charcoal)', color: 'var(--cream)' }}>
+    <section id="awards" data-chapter style={{ padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,4rem)', background: 'var(--cream-dark)', color: 'var(--charcoal)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '3rem' }}>
-          <span className="section-number reveal" style={{ color: 'rgba(247,245,240,0.35)' }}>04</span>
-          <div className="divider-line reveal" style={{ flex: 1, background: 'rgba(247,245,240,0.15)' }} />
-          <span className="reveal" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.72rem', color: 'rgba(247,245,240,0.35)', letterSpacing: '0.1em' }}>AWARDS</span>
-        </div>
+        <SectionHeader num="04" label="AWARDS" />
         <h2 className="reveal" style={{ fontFamily: "'Noto Sans KR',sans-serif", fontWeight: 900, fontSize: 'clamp(2rem,4vw,3.5rem)', marginBottom: '2.5rem' }}>수상 내역</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: '1.25rem' }}>
           {AWARDS.map((award, i) => (
-            <div key={i} className={`reveal reveal-delay-${i + 1}`} style={{ padding: '1.75rem', border: '1px solid rgba(247,245,240,0.12)', transition: 'border-color 0.2s ease' }} onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(247,245,240,0.45)')} onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(247,245,240,0.12)')}>
-              <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.7rem', color: 'rgba(247,245,240,0.35)', marginBottom: '0.6rem', letterSpacing: '0.08em' }}>{award.date}</p>
+            <div key={i} className={`reveal reveal-delay-${i + 1}`} style={{ padding: '1.75rem', border: '1px solid var(--gray-line)', background: 'var(--white)', transition: 'border-color 0.2s ease, transform 0.2s ease' }} onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--charcoal)'; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--gray-line)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
+              <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.7rem', color: 'var(--gray-text)', marginBottom: '0.6rem', letterSpacing: '0.08em' }}>{award.date}</p>
               <h3 style={{ fontFamily: "'Noto Sans KR',sans-serif", fontWeight: 700, fontSize: '0.95rem', marginBottom: '0.4rem', lineHeight: 1.45 }}>{award.title}</h3>
-              <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.82rem', color: '#7BA7FF', marginBottom: '0.35rem' }}>{award.result}</p>
-              <p style={{ fontSize: '0.78rem', color: 'rgba(247,245,240,0.45)', marginBottom: '1rem' }}>{award.org}</p>
+              <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.82rem', color: 'var(--accent)', marginBottom: '0.35rem' }}>{award.result}</p>
+              <p style={{ fontSize: '0.78rem', color: 'var(--gray-text)', marginBottom: '1rem' }}>{award.org}</p>
               {/* 상장 이미지 */}
-              <div style={{ overflow: 'hidden', border: '1px solid rgba(247,245,240,0.1)', background: '#fff' }}>
-                <img src={award.image} alt={award.title} style={{ width: '100%', display: 'block', objectFit: 'contain', maxHeight: '280px' }} />
+              <div style={{ overflow: 'hidden', border: '1px solid var(--gray-line)', background: '#fff' }}>
+                <img src={award.image} alt={award.title} loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain', maxHeight: '280px' }} />
               </div>
             </div>
           ))}
@@ -345,13 +425,13 @@ function AwardsSection() {
 
 function ContactSection() {
   return (
-    <section id="contact" style={{ padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,4rem)' }}>
+    <section id="contact" data-chapter style={{ padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,4rem)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <SectionHeader num="05" label="CONTACT" />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 'clamp(2rem,5vw,6rem)', alignItems: 'center' }}>
           <div>
-            <h2 className="reveal" style={{ fontFamily: "'Noto Sans KR',sans-serif", fontWeight: 900, fontSize: 'clamp(2rem,4vw,3.5rem)', lineHeight: 1.2, marginBottom: '1.25rem' }}>함께 일하고<br />싶으신가요?</h2>
-            <p className="reveal reveal-delay-1" style={{ fontSize: '0.92rem', color: 'var(--charcoal-mid)', lineHeight: 1.9 }}>새로운 기회와 협업에 항상 열려 있습니다.<br />아래 연락처로 편하게 연락 주세요.</p>
+            <h2 className="reveal" style={{ fontFamily: "'Noto Sans KR',sans-serif", fontWeight: 900, fontSize: 'clamp(2rem,4vw,3.5rem)', lineHeight: 1.2, marginBottom: '1.25rem' }}>읽어주셔서<br />감사합니다.</h2>
+            <p className="reveal reveal-delay-1" style={{ fontSize: '0.92rem', color: 'var(--charcoal-mid)', lineHeight: 1.9 }}>기본기와 실행력을 바탕으로 성장하는 백엔드 개발자가 되겠습니다.<br />더 궁금한 점이 있다면 편하게 연락 주세요.</p>
           </div>
           <div className="reveal reveal-delay-2" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             {[
@@ -397,6 +477,7 @@ function SectionHeader({ num, label }: { num: string; label: string }) {
 
 export default function App() {
   useScrollReveal();
+  useChapterWheelScroll();
   return (
     <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
       <Navbar />
