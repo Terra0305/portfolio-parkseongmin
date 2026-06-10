@@ -125,8 +125,8 @@ function useChapterWheelScroll() {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let wheelSum = 0;
     let lastJumpAt = 0;
-    const threshold = 760;
-    const cooldown = 850;
+    const threshold = 240;
+    const cooldown = 620;
     const topOffset = 78;
 
     const getChapters = () => Array.from(document.querySelectorAll<HTMLElement>('[data-chapter]'));
