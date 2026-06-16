@@ -24,20 +24,22 @@ const IMAGES = {
 const PROJECTS = [
   {
     id: '01',
-    title: '교내 알고리즘 대회 플랫폼 Codeforces',
+    title: '교내 Codeforces 경진대회 운영 플랫폼',
     period: '2025.12 ~ 진행중',
-    role: 'Infra',
-    description: 'IT융합대학 교내 공식 알고리즘 대회 플랫폼 채택 및 운영. 단일 Azure VM 환경에서 프론트·백엔드 실행 환경을 분리하고, Nginx 리버스 프록시를 통해 파일 서빙과 API 라우팅을 단일 진입점으로 통합했습니다.',
+    role: 'Student Operator & Infra',
+    description: '조선대학교 SW중심대학사업단의 2026 교내 Codeforces 경진대회 시범 운영에 학생 운영진으로 참여했습니다. 교내 전용 플랫폼 Chosun Codeforces를 구축해 참가 신청, 대회 운영, 실시간 순위 확인을 지원하고, 단일 Azure VM 환경에서 프론트·백엔드 실행 환경을 분리했습니다.',
     tags: ['Docker', 'Azure VM', 'Nginx', 'Infra'],
     highlights: [
-      '컨테이너 기반 인프라 아키텍처 설계 및 배포 자동화',
-      'Nginx 리버스 프록시로 CORS 이슈를 구조적으로 차단하고 응답 흐름 개선',
-      '조선대학교 SW중심대학 사업 공식 플랫폼으로 채택',
+      '학생 운영진으로 문제 선정, 국문 번역 및 검수, 대회 운영 흐름에 참여',
+      '교내 전용 플랫폼 구축으로 참가 신청, 운영 관리, 실시간 순위 확인 지원',
+      '총 12개 팀 27명 참가, 참가자 만족도 평균 95.3% 기록',
+      'Nginx 리버스 프록시로 파일 서빙과 API 라우팅을 단일 진입점으로 통합',
     ],
     github: 'https://github.com/Terra0305/Korean-codeforces.git',
     notion: 'https://hallowed-second-cae.notion.site/CSforces-33cca50bf30d80f78ee4cdb9070df8a6?source=copy_link',
+    press: 'https://sw.chosun.ac.kr/main/menu?gc=934NPWN&do=view&bwrite_id=VMb3JyheK4Xq',
     images: [IMAGES.proj1_combined],
-    imageCaption: '실제 교내 코드포스 경진대회 운영 현장',
+    imageCaption: '2026 교내 Codeforces 경진대회 시범 운영 현장',
   },
   {
     id: '02',
@@ -267,6 +269,7 @@ function AboutSection() {
             ]} />
             <div style={{ marginTop: '2.5rem' }}>
               <InfoList title="Activities" items={[
+                { period: '2026.04', desc: '조선대학교 SW중심대학사업단 2026 교내 Codeforces 경진대회 학생 운영진' },
                 { period: '2025.07 ~ 2025.11', desc: '호남 ICT 이노베이션 개발자 소그룹 팀빌딩 6기 팀장' },
                 { period: '2025.08 ~ 2025.10', desc: 'GIST-MIT 공동 연구, 외부 참여 연구원 (Research Assistant)' },
               ]} />
@@ -352,6 +355,11 @@ function ProjectCard({ project, delay }: { project: typeof PROJECTS[0]; delay: n
           {'notion' in project && project.notion && (
             <a href={project.notion} target="_blank" rel="noopener noreferrer" className="github-btn" onClick={e => e.stopPropagation()} style={{ color: hovered ? '#7BA7FF' : 'var(--charcoal)', borderColor: hovered ? 'rgba(247,245,240,0.3)' : 'var(--charcoal)', flexShrink: 0 }}>
               Notion
+            </a>
+          )}
+          {'press' in project && project.press && (
+            <a href={project.press} target="_blank" rel="noopener noreferrer" className="github-btn" onClick={e => e.stopPropagation()} style={{ color: hovered ? '#7BA7FF' : 'var(--charcoal)', borderColor: hovered ? 'rgba(247,245,240,0.3)' : 'var(--charcoal)', flexShrink: 0 }}>
+              보도자료
             </a>
           )}
           <a href={project.github} target="_blank" rel="noopener noreferrer" className="github-btn" onClick={e => e.stopPropagation()} style={{ color: hovered ? '#7BA7FF' : 'var(--charcoal)', borderColor: hovered ? 'rgba(247,245,240,0.3)' : 'var(--charcoal)', flexShrink: 0 }}>
