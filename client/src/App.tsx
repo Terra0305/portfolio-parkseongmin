@@ -129,74 +129,6 @@ function useScrollReveal() {
   }, []);
 }
 
-function useChapterWheelScroll() {
-  useEffect(() => {
-    const media = window.matchMedia('(min-width: 769px)');
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let wheelSum = 0;
-    let lastJumpAt = 0;
-    const threshold = 160;
-    const cooldown = 520;
-    const topOffset = 78;
-
-    const getChapters = () => Array.from(document.querySelectorAll<HTMLElement>('[data-chapter]'));
-
-    const getCurrentIndex = (chapters: HTMLElement[]) => {
-      const anchor = window.scrollY + window.innerHeight * 0.38;
-      return chapters.reduce((closest, chapter, index) => {
-        const currentDistance = Math.abs(chapter.offsetTop - anchor);
-        const closestDistance = Math.abs(chapters[closest].offsetTop - anchor);
-        return currentDistance < closestDistance ? index : closest;
-      }, 0);
-    };
-
-    const onWheel = (event: WheelEvent) => {
-      if (!media.matches || reducedMotion.matches || event.ctrlKey) return;
-
-      const chapters = getChapters();
-      if (chapters.length < 2) return;
-
-      const now = Date.now();
-      const currentIndex = getCurrentIndex(chapters);
-      const current = chapters[currentIndex];
-      const rect = current.getBoundingClientRect();
-      const goingDown = event.deltaY > 0;
-      const canScrollInsideCurrent =
-        goingDown
-          ? rect.bottom > window.innerHeight + 48
-          : rect.top < topOffset - 48;
-
-      if (canScrollInsideCurrent) {
-        wheelSum = 0;
-        return;
-      }
-
-      event.preventDefault();
-
-      if (now - lastJumpAt < cooldown) return;
-
-      wheelSum += event.deltaY;
-      if (Math.abs(wheelSum) < threshold) return;
-
-      const direction = wheelSum > 0 ? 1 : -1;
-      const nextIndex = Math.max(0, Math.min(chapters.length - 1, currentIndex + direction));
-
-      wheelSum = 0;
-      if (nextIndex === currentIndex) return;
-
-      lastJumpAt = now;
-      const targetTop = Math.max(0, chapters[nextIndex].offsetTop - topOffset);
-      window.scrollTo({
-        top: targetTop,
-        behavior: reducedMotion.matches ? 'auto' : 'smooth',
-      });
-    };
-
-    window.addEventListener('wheel', onWheel, { passive: false });
-    return () => window.removeEventListener('wheel', onWheel);
-  }, []);
-}
-
 // ─── Navbar ───────────────────────────────────────────────────────────────────
 
 function Navbar() {
@@ -500,7 +432,6 @@ function SectionHeader({ num, label }: { num: string; label: string }) {
 
 export default function App() {
   useScrollReveal();
-  useChapterWheelScroll();
   return (
     <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
       <Navbar />
