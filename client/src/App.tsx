@@ -24,14 +24,14 @@ const IMAGES = {
 const PROJECTS = [
   {
     id: '01',
-    title: '교내 Codeforces 경진대회 운영 플랫폼',
+    title: '교내 Codeforces 경진대회 사이트 구축 및 운영',
     period: '2025.12 ~ 진행중',
     role: 'Student Operator & Infra',
-    description: '조선대학교 SW중심대학사업단의 2026 교내 Codeforces 경진대회 시범 운영에 학생 운영진으로 참여했습니다. 교내 전용 플랫폼 Chosun Codeforces를 구축해 참가 신청, 대회 운영, 실시간 순위 확인을 지원하고, 단일 Azure VM 환경에서 프론트·백엔드 실행 환경을 분리했습니다.',
+    description: '조선대학교 SW중심대학사업단의 교내 Codeforces 경진대회 사이트를 팀원들과 함께 구축·운영했습니다. 저는 Azure VM, Docker, Nginx 기반 배포 인프라를 담당하며 프론트엔드와 백엔드 서비스를 분리 실행하고, 대회 운영에 필요한 참가 신청과 실시간 순위 확인 환경을 구성했습니다.',
     tags: ['Docker', 'Azure VM', 'Nginx', 'Infra'],
     highlights: [
       '학생 운영진으로 문제 선정, 국문 번역 및 검수, 대회 운영 흐름에 참여',
-      '교내 전용 플랫폼 구축으로 참가 신청, 운영 관리, 실시간 순위 확인 지원',
+      '교내 대회 사이트 구축·운영으로 참가 신청, 운영 관리, 실시간 순위 확인 지원',
       '총 12개 팀 27명 참가, 참가자 만족도 평균 95.3% 기록',
       'Nginx 리버스 프록시로 파일 서빙과 API 라우팅을 단일 진입점으로 통합',
     ],
