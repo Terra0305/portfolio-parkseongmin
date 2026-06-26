@@ -46,11 +46,12 @@ const PROJECTS = [
     title: '어린이 코딩 교육을 위한 알고리즘 시각화 플랫폼',
     period: '2025.06 ~ 2026.02',
     role: 'Backend',
-    description: '초급자를 위한 알고리즘 흐름을 시각화해주는 교육용 웹 플랫폼. 다중 접속 환경의 서버 부하를 고려해 Spring Security + JWT 기반 Stateless 인증 구조를 설계했습니다.',
+    description: '현직 코딩 강사의 교육 현장 경험을 바탕으로 기획한 초급자용 알고리즘 시각화 웹 플랫폼입니다. 실제 학원 수업 환경에서 시범 활용하며 교육 현장 적용 가능성을 검증했고, 다중 접속 환경을 고려해 Spring Security + JWT 기반 Stateless 인증 구조를 설계했습니다.',
     tags: ['Java', 'SpringBoot', 'JWT', 'Swagger', 'PostgreSQL'],
     highlights: [
       '세션 관리가 필요 없는 확장 가능한 인증 아키텍처 구현',
       'Swagger 도입으로 실시간 API 명세서를 자동화해 프론트엔드 협업 비용 절감',
+      '실제 학원 수업 환경에서 시범 활용하며 초급 학습자 대상 사용성 검증',
       '교내 지원금 200만 원 유치 및 고도화 진행 중',
     ],
     github: 'https://github.com/Terra0305/Capstone',
