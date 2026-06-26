@@ -146,27 +146,10 @@ body {
 .project-card {
   background: var(--white);
   border: 1px solid var(--gray-line);
-  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  transition: transform 0.3s ease;
 }
 .project-card:hover {
-  background: var(--charcoal);
-  border-color: var(--charcoal);
   transform: translateY(-2px);
-}
-.project-card:hover .card-title,
-.project-card:hover .card-period,
-.project-card:hover .card-desc,
-.project-card:hover .card-body {
-  color: var(--cream);
-}
-.project-card:hover .card-tag {
-  background: rgba(247, 245, 240, 0.15);
-  color: var(--cream);
-  border-color: rgba(247, 245, 240, 0.3);
-}
-.project-card:hover .card-link {
-  color: #7BA7FF;
-  border-color: rgba(247, 245, 240, 0.3);
 }
 
 /* ─── Skill Tag ───────────────────────────────────── */
@@ -180,23 +163,13 @@ body {
   font-size: 0.8rem;
   color: var(--charcoal-mid);
   background: var(--white);
-  transition: all 0.2s ease;
-}
-.skill-tag:hover {
-  background: var(--charcoal);
-  color: var(--cream);
-  border-color: var(--charcoal);
+  transition: border-color 0.2s ease;
 }
 
 /* ─── Award Card ──────────────────────────────────── */
 .award-card {
   border-top: 1px solid var(--gray-line);
   padding: 1.5rem 0;
-  transition: all 0.2s ease;
-}
-.award-card:hover {
-  padding-left: 0.75rem;
-  border-top-color: var(--charcoal);
 }
 
 /* ─── Contact Link ────────────────────────────────── */
@@ -210,11 +183,7 @@ body {
   text-decoration: none;
   border-bottom: 1px solid var(--gray-line);
   padding-bottom: 2px;
-  transition: border-color 0.2s ease, color 0.2s ease;
-}
-.contact-link:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+  transition: border-color 0.2s ease;
 }
 
 /* ─── GitHub Button ───────────────────────────────── */
@@ -224,11 +193,16 @@ body {
   gap: 0.4rem;
   padding: 0.45rem 0.9rem;
   border: 1px solid currentColor;
+  color: var(--charcoal);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   letter-spacing: 0.05em;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.link-hover-accent:hover {
+  color: var(--accent);
 }
 
 a:focus-visible,

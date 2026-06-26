@@ -135,8 +135,8 @@ function useChapterWheelScroll() {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let wheelSum = 0;
     let lastJumpAt = 0;
-    const threshold = 240;
-    const cooldown = 620;
+    const threshold = 160;
+    const cooldown = 520;
     const topOffset = 78;
 
     const getChapters = () => Array.from(document.querySelectorAll<HTMLElement>('[data-chapter]'));
@@ -238,8 +238,8 @@ function HeroSection() {
           기본기가 튼튼한 개발자를 지향합니다.<br />꾸준한 알고리즘 학습으로 교내 경시대회 1위를 수상했고,<br />코드가 실제 서비스로 구현되는 전체 과정을 깊이 있게 배웠습니다.
         </p>
         <div className="hero-animate hero-animate-5" style={{ display: 'flex', gap: '1rem', marginTop: '2.5rem', flexWrap: 'wrap' }}>
-          <a href="#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.6rem', background: 'var(--charcoal)', color: 'var(--cream)', fontFamily: "'JetBrains Mono',monospace", fontSize: '0.8rem', letterSpacing: '0.08em', textDecoration: 'none', transition: 'background 0.25s ease' }} onMouseEnter={e => (e.currentTarget.style.background = '#3B5BDB')} onMouseLeave={e => (e.currentTarget.style.background = 'var(--charcoal)')}>View Projects →</a>
-          <a href="mailto:jpsm0305@naver.com" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.6rem', border: '1px solid var(--charcoal)', color: 'var(--charcoal)', fontFamily: "'JetBrains Mono',monospace", fontSize: '0.8rem', letterSpacing: '0.08em', textDecoration: 'none', transition: 'all 0.25s ease', background: 'transparent' }} onMouseEnter={e => { e.currentTarget.style.background = 'var(--charcoal)'; e.currentTarget.style.color = 'var(--cream)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--charcoal)'; }}>Contact Me</a>
+          <a href="#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.6rem', background: 'var(--charcoal)', color: 'var(--cream)', fontFamily: "'JetBrains Mono',monospace", fontSize: '0.8rem', letterSpacing: '0.08em', textDecoration: 'none' }}>View Projects →</a>
+          <a href="mailto:jpsm0305@naver.com" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.6rem', border: '1px solid var(--charcoal)', color: 'var(--charcoal)', fontFamily: "'JetBrains Mono',monospace", fontSize: '0.8rem', letterSpacing: '0.08em', textDecoration: 'none', background: 'transparent' }}>Contact Me</a>
         </div>
       </div>
     </section>
@@ -346,63 +346,62 @@ function ProjectsSection() {
 }
 
 function ProjectCard({ project, delay }: { project: typeof PROJECTS[0]; delay: number }) {
-  const [hovered, setHovered] = useState(false);
   return (
-    <div data-chapter className={`project-card reveal reveal-delay-${delay}`} style={{ padding: 'clamp(1.5rem,3vw,2.5rem)' }} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <div data-chapter className={`project-card reveal reveal-delay-${delay}`} style={{ padding: 'clamp(1.5rem,3vw,2.5rem)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.75rem' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.4rem', flexWrap: 'wrap' }}>
-            <span className="font-mono card-period" style={{ fontSize: '0.72rem', color: hovered ? 'rgba(247,245,240,0.5)' : 'var(--gray-text)' }}>{project.id}</span>
-            <span className="font-mono card-period" style={{ fontSize: '0.72rem', color: hovered ? 'rgba(247,245,240,0.5)' : 'var(--gray-text)' }}>{project.period}</span>
-            <span className="font-mono card-period" style={{ fontSize: '0.68rem', color: hovered ? 'rgba(247,245,240,0.6)' : 'var(--gray-text)', border: `1px solid ${hovered ? 'rgba(247,245,240,0.25)' : 'var(--gray-line)'}`, padding: '0.12rem 0.5rem' }}>{project.role}</span>
+            <span className="font-mono card-period" style={{ fontSize: '0.72rem', color: 'var(--gray-text)' }}>{project.id}</span>
+            <span className="font-mono card-period" style={{ fontSize: '0.72rem', color: 'var(--gray-text)' }}>{project.period}</span>
+            <span className="font-mono card-period" style={{ fontSize: '0.68rem', color: 'var(--gray-text)', border: '1px solid var(--gray-line)', padding: '0.12rem 0.5rem' }}>{project.role}</span>
           </div>
-          <h3 className="card-title" style={{ fontFamily: "'Noto Sans KR',sans-serif", fontWeight: 700, fontSize: 'clamp(1rem,2vw,1.3rem)', lineHeight: 1.35, color: hovered ? 'var(--cream)' : 'var(--charcoal)' }}>{project.title}</h3>
+          <h3 className="card-title" style={{ fontFamily: "'Noto Sans KR',sans-serif", fontWeight: 700, fontSize: 'clamp(1rem,2vw,1.3rem)', lineHeight: 1.35, color: 'var(--charcoal)' }}>{project.title}</h3>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
           {'notion' in project && project.notion && (
-            <a href={project.notion} target="_blank" rel="noopener noreferrer" className="github-btn" onClick={e => e.stopPropagation()} style={{ color: hovered ? '#7BA7FF' : 'var(--charcoal)', borderColor: hovered ? 'rgba(247,245,240,0.3)' : 'var(--charcoal)', flexShrink: 0 }}>
+            <a href={project.notion} target="_blank" rel="noopener noreferrer" className="github-btn link-hover-accent" onClick={e => e.stopPropagation()} style={{ flexShrink: 0 }}>
               Notion
             </a>
           )}
           {'press' in project && project.press && (
-            <a href={project.press} target="_blank" rel="noopener noreferrer" className="github-btn" onClick={e => e.stopPropagation()} style={{ color: hovered ? '#7BA7FF' : 'var(--charcoal)', borderColor: hovered ? 'rgba(247,245,240,0.3)' : 'var(--charcoal)', flexShrink: 0 }}>
+            <a href={project.press} target="_blank" rel="noopener noreferrer" className="github-btn" onClick={e => e.stopPropagation()} style={{ flexShrink: 0 }}>
               보도자료
             </a>
           )}
-          <a href={project.github} target="_blank" rel="noopener noreferrer" className="github-btn" onClick={e => e.stopPropagation()} style={{ color: hovered ? '#7BA7FF' : 'var(--charcoal)', borderColor: hovered ? 'rgba(247,245,240,0.3)' : 'var(--charcoal)', flexShrink: 0 }}>
+          <a href={project.github} target="_blank" rel="noopener noreferrer" className="github-btn link-hover-accent" onClick={e => e.stopPropagation()} style={{ flexShrink: 0 }}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" /></svg>
             GitHub
           </a>
         </div>
       </div>
-      <p className="card-desc" style={{ fontSize: '0.88rem', color: hovered ? 'rgba(247,245,240,0.75)' : 'var(--charcoal-mid)', lineHeight: 1.8, marginBottom: '1rem' }}>{project.description}</p>
+      <p className="card-desc" style={{ fontSize: '0.88rem', color: 'var(--charcoal-mid)', lineHeight: 1.8, marginBottom: '1rem' }}>{project.description}</p>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', marginBottom: '1rem' }}>
         {project.highlights.map((h, hi) => (
           <div key={hi} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-            <span className="font-mono" style={{ fontSize: '0.68rem', color: hovered ? 'rgba(247,245,240,0.4)' : 'var(--gray-text)', marginTop: '0.2rem', flexShrink: 0 }}>{String(hi + 1).padStart(2, '0')}</span>
-            <span className="card-body" style={{ fontSize: '0.84rem', lineHeight: 1.7, color: hovered ? 'rgba(247,245,240,0.85)' : 'var(--charcoal)' }}>{h}</span>
+            <span className="font-mono" style={{ fontSize: '0.68rem', color: 'var(--gray-text)', marginTop: '0.2rem', flexShrink: 0 }}>{String(hi + 1).padStart(2, '0')}</span>
+            <span className="card-body" style={{ fontSize: '0.84rem', lineHeight: 1.7, color: 'var(--charcoal)' }}>{h}</span>
           </div>
         ))}
       </div>
       {(project as any).note && (
-        <p className="font-mono" style={{ fontSize: '0.7rem', color: hovered ? 'rgba(247,245,240,0.4)' : 'var(--gray-text)', fontStyle: 'italic', marginBottom: '0.75rem' }}>* {(project as any).note}</p>
+        <p className="font-mono" style={{ fontSize: '0.7rem', color: 'var(--gray-text)', fontStyle: 'italic', marginBottom: '0.75rem' }}>* {(project as any).note}</p>
       )}
       {/* Project Images */}
       {project.images && project.images.length > 0 && (
         <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
           {project.images.map((src, idx) => (
-            <div key={idx} style={{ flex: '1 1 200px', maxWidth: '480px', overflow: 'hidden', border: `1px solid ${hovered ? 'rgba(247,245,240,0.2)' : 'var(--gray-line)'}` }}>
-              <img src={src} alt={`${project.title} 증빙`} loading="lazy" style={{ width: '100%', maxHeight: '260px', objectFit: 'contain', objectPosition: 'center', display: 'block', background: hovered ? 'rgba(255,255,255,0.05)' : '#fafafa' }} />
+            <div key={idx} style={{ flex: '1 1 200px', maxWidth: '480px', overflow: 'hidden', border: '1px solid var(--gray-line)' }}>
+              <img src={src} alt={`${project.title} 증빙`} loading="lazy" style={{ width: '100%', maxHeight: '260px', objectFit: 'contain', objectPosition: 'center', display: 'block', background: '#fafafa' }} />
             </div>
           ))}
           {'imageCaption' in project && project.imageCaption && (
-            <p className="font-mono" style={{ width: '100%', fontSize: '0.68rem', color: hovered ? 'rgba(247,245,240,0.45)' : 'var(--gray-text)' }}>{project.imageCaption}</p>
+            <p className="font-mono" style={{ width: '100%', fontSize: '0.68rem', color: 'var(--gray-text)' }}>{project.imageCaption}</p>
           )}
         </div>
       )}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
         {project.tags.map(tag => (
-          <span key={tag} className="card-tag" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.7rem', padding: '0.2rem 0.55rem', border: `1px solid ${hovered ? 'rgba(247,245,240,0.2)' : 'var(--gray-line)'}`, color: hovered ? 'rgba(247,245,240,0.6)' : 'var(--gray-text)', background: 'transparent' }}>#{tag}</span>
+          <span key={tag} className="card-tag" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.7rem', padding: '0.2rem 0.55rem', border: '1px solid var(--gray-line)', color: 'var(--gray-text)', background: 'transparent' }}>#{tag}</span>
         ))}
       </div>
     </div>
@@ -419,7 +418,7 @@ function AwardsSection() {
         <h2 className="reveal" style={{ fontFamily: "'Noto Sans KR',sans-serif", fontWeight: 900, fontSize: 'clamp(2rem,4vw,3.5rem)', marginBottom: '2.5rem' }}>수상 내역</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: '1.25rem' }}>
           {AWARDS.map((award, i) => (
-            <div key={i} className={`reveal reveal-delay-${i + 1}`} style={{ padding: '1.75rem', border: '1px solid var(--gray-line)', background: 'var(--white)', transition: 'border-color 0.2s ease, transform 0.2s ease' }} onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--charcoal)'; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--gray-line)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
+            <div key={i} className={`reveal reveal-delay-${i + 1}`} style={{ padding: '1.75rem', border: '1px solid var(--gray-line)', background: 'var(--white)' }}>
               <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.7rem', color: 'var(--gray-text)', marginBottom: '0.6rem', letterSpacing: '0.08em' }}>{award.date}</p>
               <h3 style={{ fontFamily: "'Noto Sans KR',sans-serif", fontWeight: 700, fontSize: '0.95rem', marginBottom: '0.4rem', lineHeight: 1.45 }}>{award.title}</h3>
               <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.82rem', color: 'var(--accent)', marginBottom: '0.35rem' }}>{award.result}</p>
