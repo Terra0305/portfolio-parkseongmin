@@ -136,20 +136,12 @@ body {
   width: 0;
   height: 1px;
   background: var(--charcoal);
-  transition: width 0.3s ease-out;
-}
-.nav-link:hover::after {
-  width: 100%;
 }
 
 /* ─── Project Card ────────────────────────────────── */
 .project-card {
   background: var(--white);
   border: 1px solid var(--gray-line);
-  transition: transform 0.3s ease;
-}
-.project-card:hover {
-  transform: translateY(-2px);
 }
 
 /* ─── Skill Tag ───────────────────────────────────── */
