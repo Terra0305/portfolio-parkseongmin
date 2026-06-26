@@ -103,6 +103,14 @@ const SKILLS = [
 ];
 
 const AWARDS = [
+  {
+    title: '조선대학교 AI부트캠프 해커톤',
+    result: '대상 (AquaGuard AI)',
+    date: '2026.06.23',
+    org: '조선대학교 AI부트캠프',
+    description: '양식장 IoT 센서 데이터를 기반으로 펌프·수조 설비 이상을 실시간 감지하고, 관리자에게 AI 의심 분석 결과를 제공하는 모바일 웹 데모를 구현했습니다.',
+    link: 'https://www.canva.com/design/DAHNQ6zTlEk/c4ndsNDftl_H7CTK8wJUSA/edit',
+  },
   { title: '2025 프로그래밍 경시대회 ICPC', result: '교내 1위 (대상)', date: '2025.10.11', org: '조선대학교 SW중심대학사업단', image: IMAGES.award1 },
   { title: '2025 조선대학교 SW아이디어톤 경진대회', result: '3위 (우수상)', date: '2025.11.22', org: '조선대학교 SW중심대학사업단', image: IMAGES.award2 },
   { title: '2025 호남권 SW창업 아이디어 경진대회', result: '6위 (장려상)', date: '2025.09.30', org: '호남권 소프트웨어중심대학협의회', image: IMAGES.award3 },
@@ -265,7 +273,6 @@ function AboutSection() {
             <InfoList title="Education & Military" items={[
               { period: '2021.03 ~', desc: '조선대학교 컴퓨터 공학과 재학 중' },
               { period: '2022.04 ~ 2023.10', desc: '대한민국 육군 병장 만기 전역' },
-              { period: '2018.03 ~ 2021.02', desc: '광덕고등학교 졸업' },
             ]} />
             <div style={{ marginTop: '2.5rem' }}>
               <InfoList title="Activities" items={[
@@ -417,10 +424,19 @@ function AwardsSection() {
               <h3 style={{ fontFamily: "'Noto Sans KR',sans-serif", fontWeight: 700, fontSize: '0.95rem', marginBottom: '0.4rem', lineHeight: 1.45 }}>{award.title}</h3>
               <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.82rem', color: 'var(--accent)', marginBottom: '0.35rem' }}>{award.result}</p>
               <p style={{ fontSize: '0.78rem', color: 'var(--gray-text)', marginBottom: '1rem' }}>{award.org}</p>
-              {/* 상장 이미지 */}
-              <div style={{ overflow: 'hidden', border: '1px solid var(--gray-line)', background: '#fff' }}>
-                <img src={award.image} alt={award.title} loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain', maxHeight: '280px' }} />
-              </div>
+              {'description' in award && award.description && (
+                <p style={{ fontSize: '0.78rem', color: 'var(--charcoal-mid)', lineHeight: 1.7, marginBottom: '1rem' }}>{award.description}</p>
+              )}
+              {'link' in award && award.link && (
+                <a href={award.link} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', fontFamily: "'JetBrains Mono',monospace", fontSize: '0.72rem', color: 'var(--charcoal)', textDecoration: 'none', borderBottom: '1px solid var(--charcoal)', marginBottom: '1rem' }}>
+                  View Presentation
+                </a>
+              )}
+              {'image' in award && award.image && (
+                <div style={{ overflow: 'hidden', border: '1px solid var(--gray-line)', background: '#fff' }}>
+                  <img src={award.image} alt={award.title} loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain', maxHeight: '280px' }} />
+                </div>
+              )}
             </div>
           ))}
         </div>
