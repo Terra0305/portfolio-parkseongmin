@@ -364,7 +364,7 @@ function ProjectCard({ project, delay }: { project: typeof PROJECTS[0]; delay: n
             </a>
           )}
           {'press' in project && project.press && (
-            <a href={project.press} target="_blank" rel="noopener noreferrer" className="github-btn" onClick={e => e.stopPropagation()} style={{ flexShrink: 0 }}>
+            <a href={project.press} target="_blank" rel="noopener noreferrer" className="github-btn link-hover-accent" onClick={e => e.stopPropagation()} style={{ flexShrink: 0 }}>
               보도자료
             </a>
           )}
