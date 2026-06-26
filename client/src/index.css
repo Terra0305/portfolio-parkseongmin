@@ -142,6 +142,30 @@ body {
 .project-card {
   background: var(--white);
   border: 1px solid var(--gray-line);
+  color: var(--charcoal);
+}
+
+.project-card:hover {
+  background: var(--white) !important;
+  border-color: var(--gray-line) !important;
+  color: var(--charcoal) !important;
+  transform: none !important;
+}
+
+.project-card:hover .card-title,
+.project-card:hover .card-body {
+  color: var(--charcoal) !important;
+}
+
+.project-card:hover .card-desc {
+  color: var(--charcoal-mid) !important;
+}
+
+.project-card:hover .card-period,
+.project-card:hover .card-tag {
+  color: var(--gray-text) !important;
+  border-color: var(--gray-line) !important;
+  background: transparent !important;
 }
 
 /* ─── Skill Tag ───────────────────────────────────── */
@@ -194,7 +218,7 @@ body {
 }
 
 .link-hover-accent:hover {
-  color: var(--accent);
+  color: var(--accent) !important;
 }
 
 a:focus-visible,
