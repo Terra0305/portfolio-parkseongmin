@@ -209,6 +209,8 @@ function AboutSection() {
             ]} />
             <div style={{ marginTop: '2.5rem' }}>
               <InfoList title="Activities" items={[
+                { period: '2026.07 ~ 진행중', desc: '초등학생 대상 아두이노 코딩 교육 강사' },
+                { period: '2026.07 ~ 진행중', desc: 'ICT 빌드업 캠프 팀장' },
                 { period: '2026.04', desc: '조선대학교 SW중심대학사업단 2026 교내 Codeforces 경진대회 학생 운영진' },
                 { period: '2025.07 ~ 2025.11', desc: '호남 ICT 이노베이션 개발자 소그룹 팀빌딩 6기 팀장' },
                 { period: '2025.08 ~ 2025.10', desc: 'GIST-MIT 공동 연구, 외부 참여 연구원 (Research Assistant)' },
