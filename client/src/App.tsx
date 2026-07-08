@@ -269,7 +269,7 @@ function SkillsSection() {
 
 function ProjectsSection() {
   return (
-    <section id="projects" style={{ padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,4rem)' }}>
+    <section id="projects" data-chapter style={{ padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,4rem)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <SectionHeader num="03" label="PROJECT EXPERIENCE" />
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -282,7 +282,7 @@ function ProjectsSection() {
 
 function ProjectCard({ project, delay }: { project: typeof PROJECTS[0]; delay: number }) {
   return (
-    <div data-chapter className={`project-card reveal reveal-delay-${delay}`} style={{ padding: 'clamp(1.5rem,3vw,2.5rem)' }}>
+    <div className={`project-card reveal reveal-delay-${delay}`} style={{ padding: 'clamp(1.5rem,3vw,2.5rem)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.75rem' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.4rem', flexWrap: 'wrap' }}>
