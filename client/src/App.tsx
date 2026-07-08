@@ -212,8 +212,8 @@ function AboutSection() {
                 { period: '2026.07 ~ 진행중', desc: '초등학생 대상 아두이노 코딩 교육 강사' },
                 { period: '2026.07 ~ 진행중', desc: 'ICT 빌드업 캠프 팀장' },
                 { period: '2026.04', desc: '조선대학교 SW중심대학사업단 2026 교내 Codeforces 경진대회 학생 운영진' },
-                { period: '2025.07 ~ 2025.11', desc: '호남 ICT 이노베이션 개발자 소그룹 팀빌딩 6기 팀장' },
                 { period: '2025.08 ~ 2025.10', desc: 'GIST-MIT 공동 연구, 외부 참여 연구원 (Research Assistant)' },
+                { period: '2025.07 ~ 2025.11', desc: '호남 ICT 이노베이션 개발자 소그룹 팀빌딩 6기 팀장' },
               ]} />
             </div>
           </div>
@@ -230,7 +230,7 @@ function InfoList({ title, items }: { title: string; items: { period: string; de
       {items.map((item, i) => (
         <div key={i} className={`award-card reveal reveal-delay-${i + 1}`} style={{ display: 'flex', gap: '1.25rem', alignItems: 'flex-start' }}>
           <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.7rem', color: 'var(--gray-text)', whiteSpace: 'nowrap', minWidth: '110px', paddingTop: '0.15rem' }}>{item.period}</span>
-          <span style={{ fontSize: '0.88rem', lineHeight: 1.6 }}>{item.desc}</span>
+          <span className="info-list-desc" style={{ fontSize: '0.88rem', lineHeight: 1.6 }}>{item.desc}</span>
         </div>
       ))}
     </div>

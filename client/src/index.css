@@ -188,6 +188,12 @@ body {
   padding: 1.5rem 0;
 }
 
+.info-list-desc {
+  min-width: 0;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
 /* ─── Contact Link ────────────────────────────────── */
 .contact-link {
   display: inline-flex;
