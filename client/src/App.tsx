@@ -109,7 +109,6 @@ const AWARDS = [
     result: '1위 (대상)',
     date: '2026.06.23',
     org: '조선대학교 SW중심대학사업단',
-    description: '양식장 IoT 센서 데이터를 기반으로 펌프·수조 설비 이상을 실시간 감지하고, 관리자에게 AI 의심 분석 결과를 제공하는 모바일 웹 데모를 구현했습니다.',
     link: 'https://www.canva.com/design/DAHNQ6zTlEk/c4ndsNDftl_H7CTK8wJUSA/edit',
     image: '/images/aquaguard-grand-prize.jpeg',
   },
@@ -359,18 +358,15 @@ function AwardsSection() {
               <h3 style={{ fontFamily: "'Noto Sans KR',sans-serif", fontWeight: 700, fontSize: '0.95rem', marginBottom: '0.4rem', lineHeight: 1.45 }}>{award.title}</h3>
               <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.82rem', color: 'var(--accent)', marginBottom: '0.35rem' }}>{award.result}</p>
               <p style={{ fontSize: '0.78rem', color: 'var(--gray-text)', marginBottom: '1rem' }}>{award.org}</p>
-              {'description' in award && award.description && (
-                <p style={{ fontSize: '0.78rem', color: 'var(--charcoal-mid)', lineHeight: 1.7, marginBottom: '1rem' }}>{award.description}</p>
-              )}
-              {'link' in award && award.link && (
-                <a href={award.link} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', fontFamily: "'JetBrains Mono',monospace", fontSize: '0.72rem', color: 'var(--charcoal)', textDecoration: 'none', borderBottom: '1px solid var(--charcoal)', marginBottom: '1rem' }}>
-                  View Presentation
-                </a>
-              )}
               {'image' in award && award.image && (
                 <div style={{ overflow: 'hidden', border: '1px solid var(--gray-line)', background: '#fff' }}>
                   <img src={award.image} alt={award.title} loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain', maxHeight: '280px' }} />
                 </div>
+              )}
+              {'link' in award && award.link && (
+                <a href={award.link} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', fontFamily: "'JetBrains Mono',monospace", fontSize: '0.72rem', color: 'var(--charcoal)', textDecoration: 'none', borderBottom: '1px solid var(--charcoal)', marginTop: '1rem' }}>
+                  View Presentation
+                </a>
               )}
             </div>
           ))}
