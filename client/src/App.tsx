@@ -105,12 +105,14 @@ const SKILLS = [
 
 const AWARDS = [
   {
-    title: '2026 AI창업 부트캠프',
-    result: '1위 (대상)',
+    title: '조선대학교 AI부트캠프 해커톤',
+    result: '대상 (AquaGuard AI)',
     date: '2026.06.23',
-    org: '조선대학교 SW중심대학사업단',
+    org: '조선대학교 AI부트캠프',
+    description: '양식장 IoT 센서 데이터를 기반으로 펌프·수조 설비 이상을 실시간 감지하고, 관리자에게 AI 의심 분석 결과를 제공하는 모바일 웹 데모를 구현했습니다.',
     link: 'https://www.canva.com/design/DAHNQ6zTlEk/c4ndsNDftl_H7CTK8wJUSA/edit',
     image: '/images/aquaguard-grand-prize.jpeg',
+    hideText: true,
   },
   { title: '2025 프로그래밍 경시대회 ICPC', result: '교내 1위 (대상)', date: '2025.10.11', org: '조선대학교 SW중심대학사업단', image: IMAGES.award1 },
   { title: '2025 조선대학교 SW아이디어톤 경진대회', result: '3위 (우수상)', date: '2025.11.22', org: '조선대학교 SW중심대학사업단', image: IMAGES.award2 },
@@ -340,7 +342,7 @@ function ProjectCard({ project, delay }: { project: typeof PROJECTS[0]; delay: n
         ))}
       </div>
     </div>
-  );
+  );아니
 }
 
 // ─── Awards ───────────────────────────────────────────────────────────────────
@@ -354,19 +356,26 @@ function AwardsSection() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: '1.25rem' }}>
           {AWARDS.map((award, i) => (
             <div key={i} className={`reveal reveal-delay-${i + 1}`} style={{ padding: '1.75rem', border: '1px solid var(--gray-line)', background: 'var(--white)' }}>
-              <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.7rem', color: 'var(--gray-text)', marginBottom: '0.6rem', letterSpacing: '0.08em' }}>{award.date}</p>
-              <h3 style={{ fontFamily: "'Noto Sans KR',sans-serif", fontWeight: 700, fontSize: '0.95rem', marginBottom: '0.4rem', lineHeight: 1.45 }}>{award.title}</h3>
-              <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.82rem', color: 'var(--accent)', marginBottom: '0.35rem' }}>{award.result}</p>
-              <p style={{ fontSize: '0.78rem', color: 'var(--gray-text)', marginBottom: '1rem' }}>{award.org}</p>
+              {!('hideText' in award && award.hideText) && (
+                <>
+                  <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.7rem', color: 'var(--gray-text)', marginBottom: '0.6rem', letterSpacing: '0.08em' }}>{award.date}</p>
+                  <h3 style={{ fontFamily: "'Noto Sans KR',sans-serif", fontWeight: 700, fontSize: '0.95rem', marginBottom: '0.4rem', lineHeight: 1.45 }}>{award.title}</h3>
+                  <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.82rem', color: 'var(--accent)', marginBottom: '0.35rem' }}>{award.result}</p>
+                  <p style={{ fontSize: '0.78rem', color: 'var(--gray-text)', marginBottom: '1rem' }}>{award.org}</p>
+                  {'description' in award && award.description && (
+                    <p style={{ fontSize: '0.78rem', color: 'var(--charcoal-mid)', lineHeight: 1.7, marginBottom: '1rem' }}>{award.description}</p>
+                  )}
+                </>
+              )}
+              {'link' in award && award.link && (
+                <a href={award.link} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', fontFamily: "'JetBrains Mono',monospace", fontSize: '0.72rem', color: 'var(--charcoal)', textDecoration: 'none', borderBottom: '1px solid var(--charcoal)', marginBottom: '1rem' }}>
+                  View Presentation
+                </a>
+              )}
               {'image' in award && award.image && (
                 <div style={{ overflow: 'hidden', border: '1px solid var(--gray-line)', background: '#fff' }}>
                   <img src={award.image} alt={award.title} loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain', maxHeight: '280px' }} />
                 </div>
-              )}
-              {'link' in award && award.link && (
-                <a href={award.link} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', fontFamily: "'JetBrains Mono',monospace", fontSize: '0.72rem', color: 'var(--charcoal)', textDecoration: 'none', borderBottom: '1px solid var(--charcoal)', marginTop: '1rem' }}>
-                  View Presentation
-                </a>
               )}
             </div>
           ))}
