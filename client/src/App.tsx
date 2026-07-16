@@ -7,24 +7,16 @@
 import { useEffect, useState } from "react";
 import "./index.css";
 
-// ─── Image Assets (User-provided, Public CDN) ─────────────────────────────────
+// ─── Image Assets (self-hosted in client/public/images) ──────────────────────
 const IMAGES = {
-  profile:
-    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663647760404/CrXowwJTPmTHjrEb.png",
-  proj1_combined:
-    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663647760404/fMTPWAJFUwSSBdqU.png",
-  proj2_screenshot:
-    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663647760404/aSVDeJjeWsztbsWm.png",
-  proj3_photo:
-    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663647760404/cgaGCpfyZnGsYHhF.png",
-  proj4_doc:
-    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663647760404/pCZgGlYBWfGrJiiX.png",
-  award1:
-    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663647760404/tmjPULSMalHIYAQC.png",
-  award2:
-    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663647760404/ESBrqkKZzUENUSNt.png",
-  award3:
-    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663647760404/QVKgOQacYJVNVieX.png",
+  profile: "/images/profile.png",
+  proj1_combined: "/images/proj1-codeforces.jpg",
+  proj2_screenshot: "/images/proj2-visualizer.png",
+  proj3_photo: "/images/proj3-sonedduck.jpg",
+  proj4_doc: "/images/proj4-gist-mit.png",
+  award1: "/images/award-icpc.png",
+  award2: "/images/award-ideathon.png",
+  award3: "/images/award-honam.png",
 };
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -301,7 +293,7 @@ function HeroSection() {
         flexDirection: "column",
         justifyContent: "center",
         padding: "clamp(6rem,12vh,10rem) clamp(1.5rem,5vw,4rem) 4rem",
-        backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663647760404/mXJ94MAuPRgRPyS2yxGEjU/hero-bg-juG8G2SGipz8xN37Hvy4di.webp)`,
+        backgroundImage: `url(/images/hero-bg.webp)`,
         backgroundSize: "cover",
         backgroundPosition: "center right",
         position: "relative",
@@ -616,7 +608,7 @@ function SkillsSection() {
       style={{
         padding: "clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,4rem)",
         background: "var(--cream-dark)",
-        backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663647760404/mXJ94MAuPRgRPyS2yxGEjU/skills-bg-Szx7En5suT9BoJEBm8v9ki.webp)`,
+        backgroundImage: `url(/images/skills-bg.webp)`,
         backgroundSize: "cover",
       }}
     >
