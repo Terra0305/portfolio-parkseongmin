@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://parkseongmindev.vercel.app/sitemap.xml
