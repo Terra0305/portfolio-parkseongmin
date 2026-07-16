@@ -97,10 +97,10 @@ const PROJECTS = [
 
 const SKILLS = [
   { category: 'Languages', items: ['Java', 'Python'] },
-  { category: 'Frameworks', items: ['SpringBoot', 'Spring Security'] },
-  { category: 'Database', items: ['PostgreSQL'] },
-  { category: 'Infra / DevOps', items: ['Docker', 'Nginx', 'Azure VM', 'Git'] },
-  { category: 'Tools', items: ['Swagger', 'JWT', 'Gemini API', 'Google STT'] },
+  { category: 'Frameworks', items: ['SpringBoot'] },
+  { category: 'Database', items: ['PostgreSQL', 'MySQL'] },
+  { category: 'Infra / DevOps', items: ['Docker', 'Nginx', 'Azure VM'] },
+  { category: 'Tools', items: ['GitHub', 'Swagger', 'JWT', 'Gemini API', 'Google STT'] },
 ];
 
 const AWARDS = [
@@ -164,11 +164,13 @@ function HeroSection() {
       <span style={{ position: 'absolute', bottom: '1.5rem', right: '1.5rem', width: '1.75rem', height: '1.75rem', borderBottom: '2px solid var(--charcoal)', borderRight: '2px solid var(--charcoal)' }} />
       <div style={{ maxWidth: '900px' }}>
         <p className="hero-animate hero-animate-1 font-mono" style={{ fontSize: '0.8rem', color: 'var(--gray-text)', marginBottom: '1.25rem', letterSpacing: '0.15em' }}>Backend Developer</p>
-        <h1 className="hero-animate hero-animate-2" style={{ fontFamily: "'Noto Sans KR',sans-serif", fontWeight: 900, fontSize: 'clamp(2.8rem,7vw,6rem)', lineHeight: 1.05, letterSpacing: '-0.02em', marginBottom: '0.15rem' }}>개발자</h1>
+        <h1 className="hero-animate hero-animate-2" style={{ fontFamily: "'Noto Sans KR',sans-serif", fontWeight: 900, fontSize: 'clamp(2.8rem,7vw,6rem)', lineHeight: 1.05, letterSpacing: '-0.02em', marginBottom: '0.15rem' }}>
+          개발자 박성민
+        </h1>
         <h1 className="font-display hero-animate hero-animate-3" style={{ fontSize: 'clamp(3.2rem,9vw,8.5rem)', lineHeight: 1, letterSpacing: '0.02em', marginBottom: '2.5rem' }}>PARKSUNGMIN</h1>
         <div className="hero-divider" />
         <p className="hero-animate hero-animate-4" style={{ fontSize: 'clamp(0.9rem,1.5vw,1.05rem)', color: 'var(--charcoal-mid)', lineHeight: 1.9, maxWidth: '460px' }}>
-          기본기가 튼튼한 개발자를 지향합니다.<br />꾸준한 알고리즘 학습으로 교내 경시대회 1위를 수상했고,<br />코드가 실제 서비스로 구현되는 전체 과정을 깊이 있게 배웠습니다.
+          문제를 해결하고, 배운 것을 나누는 개발자입니다.<br />꾸준한 알고리즘 학습과 서비스 개발로 두 차례 대상을 수상했으며,<br />현재 초등학생들에게 아두이노 코딩을 가르치고 있습니다.
         </p>
         <div className="hero-animate hero-animate-5" style={{ display: 'flex', gap: '1rem', marginTop: '2.5rem', flexWrap: 'wrap' }}>
           <a href="#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.6rem', background: 'var(--charcoal)', color: 'var(--cream)', fontFamily: "'JetBrains Mono',monospace", fontSize: '0.8rem', letterSpacing: '0.08em', textDecoration: 'none' }}>View Projects →</a>
