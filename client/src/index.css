@@ -5,7 +5,7 @@
  * Layout: Asymmetric, section numbers, horizontal dividers
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Fonts are loaded via <link> in index.html (preconnect + stylesheet) — do not duplicate here */
 
 @tailwind base;
 @tailwind components;
@@ -39,15 +39,12 @@ html {
   scroll-margin-top: 4.875rem;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  html {
-    scroll-snap-type: y proximity;
-  }
-
-  [data-chapter] {
-    scroll-snap-align: start;
-  }
-}
+/*
+ * NOTE: root scroll-snap was removed intentionally.
+ * With lazy-loaded images and reveal animations changing layout, Chrome re-resolves
+ * snap points and can jump the page to a random section on load; snap also fights
+ * the user's wheel on tall, uneven sections. Smooth free scrolling feels better here.
+ */
 
 body {
   background-color: var(--cream);
@@ -146,6 +143,12 @@ body {
   width: 0;
   height: 1px;
   background: var(--charcoal);
+  transition: width 0.25s ease-out;
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  width: 100%;
 }
 
 /* ─── Project Card ────────────────────────────────── */
@@ -189,7 +192,12 @@ body {
   font-size: 0.8rem;
   color: var(--charcoal-mid);
   background: var(--white);
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.skill-tag:hover {
+  border-color: var(--charcoal);
+  color: var(--charcoal);
 }
 
 /* ─── Award Card ──────────────────────────────────── */
@@ -215,7 +223,12 @@ body {
   text-decoration: none;
   border-bottom: 1px solid var(--gray-line);
   padding-bottom: 2px;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.contact-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 /* ─── GitHub Button ───────────────────────────────── */
@@ -276,9 +289,11 @@ button:focus-visible {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
   }
 }
 
@@ -317,4 +332,20 @@ button:focus-visible {
   max-width: 480px;
   animation: expandWidth 1s ease-out 0.6s forwards;
   margin-bottom: 2rem;
+}
+
+/* ─── Mobile Menu ─────────────────────────────────── */
+@keyframes menuSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-menu {
+  animation: menuSlideIn 0.25s ease-out;
 }
