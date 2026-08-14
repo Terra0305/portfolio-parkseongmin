@@ -73,7 +73,8 @@ const PROJECTS = [
     highlights: [
       "Google Gemini API 연동 AI 응답 처리 파이프라인 구축",
       "DataInitializer로 실행 시마다 일관된 기차표 더미 데이터를 생성하는 테스트베드 확보",
-      "팀장으로서 300만 원 규모 정부 과제 수행, 사업화 가능성 검증",
+      "팀장으로서 300만 원 규모 정부 과제(ICT 이노베이션캠프) 수행, 최종발표평가 통과",
+      "2025 광주 G-CON 전시 참가로 사업화 가능성 대외 검증",
     ],
     github: "https://github.com/Terra0305/Teambuilding",
     notion:
