@@ -349,3 +349,75 @@ button:focus-visible {
 .mobile-menu {
   animation: menuSlideIn 0.25s ease-out;
 }
+
+/* ─── Project viewer (tabs / steps / nav) ─────────── */
+.pf-tab {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  padding: 0.7rem 1.15rem;
+  border: 1px solid var(--gray-line);
+  background: var(--white);
+  color: var(--charcoal-mid);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.pf-tab:hover {
+  border-color: var(--charcoal);
+  color: var(--charcoal);
+}
+
+.pf-tab[aria-selected="true"] {
+  background: var(--charcoal);
+  border-color: var(--charcoal);
+  color: var(--cream);
+}
+
+.pf-step {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--gray-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--charcoal-mid);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.pf-step:hover {
+  border-color: var(--charcoal);
+  color: var(--charcoal);
+}
+
+.pf-step[aria-current="step"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--white);
+}
+
+.pf-nav {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--charcoal);
+  background: transparent;
+  color: var(--charcoal);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.pf-nav:hover:not(:disabled) {
+  background: var(--charcoal);
+  color: var(--cream);
+}
+
+.pf-nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+[hidden] {
+  display: none !important;
+}
