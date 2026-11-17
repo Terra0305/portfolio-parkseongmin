@@ -57,7 +57,7 @@ type Project = {
   owned?: string[];
   troubleshooting?: Troubleshooting[];
   outcomeNote?: string;
-  github: string;
+  github?: string; // 사내 프로젝트는 공개 저장소 없음
   demo?: string;
   notion?: string;
   press?: string;
@@ -69,6 +69,148 @@ type Project = {
 const PROJECTS: Project[] = [
   {
     id: "01",
+    tab: "UAV 대시보드",
+    title: "UAV 대기 관측 데이터 수신·3D 시각화 대시보드",
+    period: "2026.10 ~ 진행중",
+    periodNote:
+      "현업 프로젝트 · 입사 전 사전 적응을 위해 선행 개발, 입사 직후 합류",
+    role: "Full-stack (단독 개발)",
+    purpose: [
+      "UAV가 측정한 기온·습도·기압 데이터를 수신·저장하고 3D 지도와 표로 보여 주는 웹 시스템",
+      "공인 시험의 표시 성공률(80%)·실시간 성공률(90%) 기준을 서버가 직접 계산해 줄별 O/X로 제공",
+    ],
+    roles: [
+      "수신 서버·DB·3D 지도 화면·배포를 혼자 개발 (초기 구축 약 3주, 이후 유지보수·개선 진행 중)",
+      "현장 비행 시험에 참여해 기체 설정·무선 손실·시계 오차 원인을 진단하고 해결",
+      "수신 규칙(저장 후 204·중복 방지)·결측 정책·시험 판정 기준을 직접 설계하고 테스트 158개로 검증 (구현에는 AI 코딩 도구 활용)",
+    ],
+    results: [
+      "자동 테스트 158개 통과 (백엔드 140 + 프론트 18)",
+      "정상·비정상 패킷 1,300건 투입, 서버 오류(5xx) 0건",
+      "현장 시험에서 실데이터 1,483건 수신·표시",
+    ],
+    tags: [
+      "Python",
+      "FastAPI",
+      "SQLAlchemy",
+      "PostgreSQL",
+      "React",
+      "TypeScript",
+      "CesiumJS",
+      "Docker",
+      "nginx",
+      "pytest",
+    ],
+    flows: [
+      {
+        label: "데이터 흐름",
+        steps: [
+          "UAV (MAVLink)",
+          "중계기 (HTTP JSON)",
+          "FastAPI /ingest (저장 후 204)",
+          "PostgreSQL (JSONB)",
+          "React + CesiumJS 3D 지도",
+        ],
+      },
+    ],
+    owned: [
+      "수신구: 저장이 끝난 뒤에만 204 응답, 중복 재전송은 한 번만 저장",
+      "단위·좌표·시각 변환 (K→°C, Pa→hPa, ENU→위·경도, 부팅 시각→UTC)",
+      "결측값은 0이 아닌 NULL로 저장, 모르는 항목은 extras(JSONB)에 보관해 코드 수정 없이 화면에 표시",
+      "시험 시작·종료 API와 성공률 집계, 줄별 O/X 결과 화면",
+      "Docker Compose · nginx 배포",
+    ],
+    troubleshooting: [
+      {
+        title:
+          "센서 값에 측정 시각·위치가 붙지 않던 문제 — 서버가 아니라 기체 설정이 원인",
+        rows: [
+          {
+            tag: "문제",
+            text: "기온·습도는 도착했지만 16건이 모두 같은 점에 찍히고, 시각은 서버 수신 시각이었음",
+          },
+          {
+            tag: "원인",
+            text: "기체가 보내던 메시지에 측정 시각 칸이 없어 중계기가 시각·위치를 비워 보냄",
+            sub: "서버 로그 → 중계기 규격서 순서로 좁혀 확인",
+          },
+          {
+            tag: "해결",
+            text: "측정 시각이 포함된 메시지로 기체 펌웨어 교체, 부팅 시 센서 자동 시작 설정",
+            sub: "이후 위치가 안 붙는 원인을 무선 용량 부족으로 좁혀 중계기 설정 한 줄로 해결",
+          },
+          {
+            tag: "결과",
+            text: "GPS 위치와 측정 시각이 기록마다 붙음 (기체→서버 지연 평균 1.22초)",
+          },
+        ],
+        metrics: [
+          {
+            label: "현장 패킷 손실률",
+            before: "15~20%",
+            after: "0.1%",
+            note: "중계기 설정 변경 후",
+          },
+        ],
+        footnote:
+          "추정으로 채운 위치·시각은 기록에 표시하고 화면에도 풀어서 보여, 추정값이 실측처럼 보이지 않게 함",
+      },
+      {
+        title: "상대 프로그램의 재전송 규칙에 맞춘 수신 구조",
+        rows: [
+          {
+            tag: "문제",
+            text: "중계기는 HTTP 204 이외 응답을 받으면 같은 데이터를 계속 다시 보냄",
+            sub: "값이 이상하다고 400을 돌려주면 같은 요청이 끝없이 되돌아옴",
+          },
+          {
+            tag: "해결",
+            text: "저장이 끝난 뒤에만 204를 주고, 값 문제는 거절하지 않고 기록에 남김",
+            sub: "구조(JSON) 자체가 깨진 경우만 400/422 · 재전송은 중복 키로 한 번만 저장",
+          },
+          {
+            tag: "결과",
+            text: "깨진 입력 1,300건에도 서버 오류 0건, 규격 조건은 테스트 29개로 고정",
+          },
+        ],
+        metrics: [
+          {
+            label: "서버 저장 지연 (수신 → 저장)",
+            before: "",
+            after: "중앙값 3ms",
+            note: "약 1.2만 건, p95 4.6ms",
+          },
+        ],
+        footnote:
+          "연동은 내 서버가 옳은가보다 상대 프로그램이 실패에 어떻게 반응하는지부터 읽어야 한다는 점을 배움",
+      },
+      {
+        title:
+          "코드는 맞는데 지도에 점이 안 보이던 문제 — 추정이 아닌 직접 확인",
+        rows: [
+          {
+            tag: "문제",
+            text: "수신 위치 지도에 점이 안 나오고 선이 각져 보임",
+            sub: "처음엔 지도가 계속 다시 계산되는 것으로 추정해 고쳤지만 해결되지 않음",
+          },
+          {
+            tag: "원인",
+            text: "확대 18단계에서 그림 좌표가 5천만 단위의 큰 수가 되어 소수점이 정확히 그려지지 않음",
+          },
+          {
+            tag: "해결",
+            text: "좌표를 지도 왼쪽 위 기준의 작은 수로 바꿔 그림",
+            sub: "실제 Chrome으로 앱을 띄워 점이 가까운 시험·흩어진 시험·진행 중 시험을 재현하고 수정 후 확인",
+          },
+        ],
+        footnote:
+          "이후 작업마다 '확인한 것 / 확인하지 못한 것'을 나눠 기록하고, 추정한 원인과 확인한 원인을 구분",
+      },
+    ],
+    note: "사내 프로젝트로 회사·고객·내부 주소 등 식별 정보는 제외했으며, 공개 저장소는 없습니다.",
+  },
+  {
+    id: "02",
     tab: "CSforces",
     title: "교내 알고리즘 대회 플랫폼 CSforces",
     period: "2025.12 ~ 2026.08",
@@ -86,7 +228,7 @@ const PROJECTS: Project[] = [
     ],
     results: [
       "2026년 4월 실제 교내 알고리즘 대회 운영",
-      "참가자 대상 만족도 조사 평균 95.3% 기록",
+      "참가 학생 대상 Google Form 만족도 조사 평균 95.3% 기록",
     ],
     tags: ["Django", "React", "Docker", "Nginx", "Azure VM", "GitHub Actions"],
     flows: [
@@ -194,7 +336,7 @@ const PROJECTS: Project[] = [
     imageCaption: "실제 교내 알고리즘 대회 운영 모습",
   },
   {
-    id: "02",
+    id: "03",
     tab: "시각화 플랫폼",
     title: "어린이 코딩 교육을 위한 알고리즘 시각화 플랫폼",
     period: "2025.06 ~ 2026.01",
@@ -312,7 +454,7 @@ const PROJECTS: Project[] = [
     imageCaption: "알고리즘 흐름을 단계별로 확인하는 코딩 시각화 화면",
   },
   {
-    id: "03",
+    id: "04",
     tab: "손에딱",
     title: '생성형 AI 기반 노인 맞춤형 기차 예매 서비스 "손에딱"',
     period: "2025.06 ~ 2025.11",
@@ -397,7 +539,7 @@ const PROJECTS: Project[] = [
           },
         ],
         footnote:
-          "측정: 테스트용 DB에 예매를 직접 넣고, 서버를 껐다 켠 뒤 남은 예매 수를 셈 (각 1회). 프로젝트가 끝난 뒤(2026년)에 발견하고 고친 문제 (DummyDataInitializer.java)",
+          "측정: 테스트용 DB에 예매를 직접 넣고, 서버를 껐다 켠 뒤 남은 예매 수를 셈 (각 1회). 프로젝트 종료(2025.11) 후 2026년에 발견하고 고친 문제 (DummyDataInitializer.java)",
       },
     ],
     github: "https://github.com/Terra0305/Teambuilding",
@@ -407,7 +549,7 @@ const PROJECTS: Project[] = [
     imageCaption: "개발자 소그룹 팀빌딩 6기 프로젝트 발표 및 검증 자료",
   },
   {
-    id: "04",
+    id: "05",
     tab: "GIST-MIT",
     title: "GIST-MIT 공동연구 데이터 전처리 지원",
     period: "2025.09 ~ 2025.10",
@@ -436,7 +578,7 @@ const COMPETENCIES = [
     num: "1",
     title: "서비스 개발 및 운영",
     items: [
-      "웹 서비스의 백엔드 설계·개발부터 배포·운영까지 경험",
+      "인증·API 구현(시각화 플랫폼), 배포·운영(CSforces), 데이터 수신 서버(UAV) 경험",
       "실제 사용자 대상 서비스 및 대회 플랫폼 운영 경험",
     ],
     keywords: "Spring Boot / Django / Azure / PostgreSQL",
@@ -726,15 +868,53 @@ function HeroSection() {
             fontSize: "clamp(0.9rem,1.5vw,1.05rem)",
             color: "var(--charcoal-mid)",
             lineHeight: 1.9,
-            maxWidth: "460px",
+            maxWidth: "680px",
+            wordBreak: "keep-all",
           }}
         >
-          문제를 해결하고, 배운 것을 나누는 개발자입니다.
+          서비스를 직접 만들고 배포·운영까지 해 온 백엔드 개발자입니다.
           <br />
-          꾸준한 알고리즘 학습과 서비스 개발로 두 차례 대상을 수상했으며,
-          <br />
-          현재 파이썬·아두이노 강사로 근무하고 있습니다.
+          교내 알고리즘 대회 플랫폼을 운영했고, 두 차례 대상을 수상했습니다.
         </p>
+        <div
+          className="hero-animate hero-animate-5"
+          style={{
+            marginTop: "1.75rem",
+            paddingTop: "1rem",
+            maxWidth: "460px",
+            borderTop: "1px solid var(--gray-line)",
+          }}
+        >
+          <p
+            className="font-mono"
+            style={{
+              fontSize: "0.74rem",
+              letterSpacing: "0.12em",
+              color: "var(--gray-text)",
+              marginBottom: "0.6rem",
+            }}
+          >
+            NOW · 2026.11.02 ~
+          </p>
+          <img
+            src="/images/unmanned-logo.webp"
+            alt="(주)언맨드시스템 UNMANNED SYSTEM 로고"
+            width={1000}
+            height={218}
+            decoding="async"
+            style={{ width: "120px", height: "auto" }}
+          />
+          <p
+            style={{
+              fontSize: "0.9rem",
+              lineHeight: 1.7,
+              color: "#555",
+              marginTop: "0.5rem",
+            }}
+          >
+            UAV 대기 관측 데이터 수신·3D 시각화 시스템 개발
+          </p>
+        </div>
         <div
           className="hero-animate hero-animate-5"
           style={{
@@ -839,11 +1019,11 @@ function AboutSection() {
                 marginBottom: "1.5rem",
               }}
             >
-              기본기가 튼튼한
+              문제의 원인을 확인하고
               <br />
-              <span style={{ fontWeight: 300 }}>개발자를 지향하는</span>
+              <span style={{ fontWeight: 300 }}>수치로 개선하는</span>
               <br />
-              지원자 박성민입니다.
+              백엔드 개발자 박성민입니다.
             </h2>
             <div
               className="reveal reveal-delay-2"
@@ -880,11 +1060,15 @@ function AboutSection() {
                 title="Activities"
                 items={[
                   {
+                    period: "2026.11.02 ~ 진행중",
+                    desc: "(주)언맨드시스템 정규직 · UAV 관측 데이터 웹 시각화 개발",
+                  },
+                  {
                     period: "2026.07 ~ 진행중",
                     desc: "파이썬·아두이노 강사",
                   },
                   {
-                    period: "2026.07 ~ 진행중",
+                    period: "2026.07 ~ 2026.11",
                     desc: "호남 ICT 이노베이션 ICT 빌드업 캠프 팀장",
                   },
                   {
@@ -1233,7 +1417,8 @@ function ProjectLinks({ project }: { project: Project }) {
   if (project.demo) links.push({ href: project.demo, label: "Live Demo ↗" });
   if (project.notion) links.push({ href: project.notion, label: "Notion" });
   if (project.press) links.push({ href: project.press, label: "보도자료" });
-  links.push({ href: project.github, label: "GitHub", github: true });
+  if (project.github)
+    links.push({ href: project.github, label: "GitHub", github: true });
   return (
     <div
       style={{
@@ -1947,8 +2132,7 @@ function ContactSection() {
                 lineHeight: 1.9,
               }}
             >
-              기본기와 실행력을 바탕으로 성장하는 백엔드 개발자가 되겠습니다.
-              <br />더 궁금한 점이 있다면 편하게 연락 주세요.
+              협업 제안과 채용 문의는 언제든 편하게 연락 주세요.
             </p>
           </div>
           <div
